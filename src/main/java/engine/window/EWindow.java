@@ -1,7 +1,9 @@
 package engine.window;
 
+import engine.util.EImage;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
@@ -21,6 +23,12 @@ public class EWindow {
 
     /**Video mode currently used.*/
     private GLFWVidMode videoMode;
+
+    /**Cursor GLFW image.*/
+    private GLFWImage cursor;
+
+    /**Icon GLFW image buffer.*/
+    private GLFWImage.Buffer icon;
 
     /**Title of the window. GLFW does not provide a method to get it so it is stored here.*/
     private String title;
@@ -80,6 +88,25 @@ public class EWindow {
         setVisible(true);
     }
 
+    /**Set the image of the cursor.
+     * @param image Engine image of the cursor.*/
+    public void setCursor(EImage image) {
+        cursor = GLFWImage.malloc();
+        cursor.set(image.getWidth(), image.getHeight(), image.getData());
+        long id = glfwCreateCursor(cursor,0,0);
+        glfwSetCursor(getHandle(), id);
+    }
+
+    /**Set the icon of the window.
+     * @param image Engine image of the window icon.*/
+    public void setIcon(EImage image) {
+        GLFWImage iconImg = GLFWImage.malloc();
+        icon = GLFWImage.malloc(1);
+        iconImg.set(image.getWidth(), image.getHeight(), image.getData());
+        icon.put(0, iconImg);
+        glfwSetWindowIcon(getHandle(), icon);
+    }
+
     /**Set the size of the window.
      * @param height Height of the window.
      * @param width Width of the window.*/
@@ -97,7 +124,6 @@ public class EWindow {
     }
 
     public void setFullscreen(boolean fullscreen) {
-
         boolean wasGrabbed = isMouseGrabbed();
         setMouseGrabbed(false);
         if(fullscreen && !isFullscreen()) {
@@ -109,7 +135,6 @@ public class EWindow {
             glfwSetWindowMonitor(getHandle(), MemoryUtil.NULL, 0, 0, oldWidth, oldHeight, 0);
             setPositionCentered();
         }
-
         if(wasGrabbed)
             setMouseGrabbed(true);
     }
@@ -230,5 +255,10 @@ public class EWindow {
         DoubleBuffer buff = MemoryUtil.memAllocDouble(1);
         glfwGetCursorPos(getHandle(), null, buff);
         return (int) buff.get(0);
+    }
+
+    /**@return True if the window is trying to close.*/
+    public boolean isCloseRequest(){
+        return glfwWindowShouldClose(getHandle());
     }
 }
