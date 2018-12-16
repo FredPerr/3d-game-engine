@@ -32,7 +32,5 @@ public class TestEngine {
         window.destroy();
         GLFW.glfwTerminate();
         System.exit(0);
-
-        //TODO test
     }
 }
