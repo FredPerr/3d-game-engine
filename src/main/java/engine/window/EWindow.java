@@ -1,5 +1,7 @@
 package engine.window;
 
+import engine.event.EventSystem;
+import engine.event.event.window.*;
 import engine.util.EImage;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -21,6 +23,18 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class EWindow {
 
+    /**Events*/
+    private EventKey eventKey;
+    private EventMouseEnter eventMouseEnter;
+    private EventMouseButton eventMouseButton;
+    private EventWindowResize eventWindowResize;
+    private EventMouseMovement eventMouseMovement;
+    private EventMouseScroll eventMouseScroll;
+    private EventWindowMaximize eventWindowMaximize;
+    private EventWindowIconify eventWindowIconify;
+    private EventWindowTryClose eventWindowTryClose;
+    private EventWindowFullscreen eventWindowFullscreen;
+
     /**Video mode currently used.*/
     private GLFWVidMode videoMode;
 
@@ -39,6 +53,9 @@ public class EWindow {
 
     /**Old width and height for fullscreen only.*/
     private int oldWidth, oldHeight;
+
+    /**old pos x and y of the mouse cursor.*/
+    private int oldMousePosX, oldMousePosY;
 
     /**The window is visible or not. GLFW does not provide a method to get it so it is stored here.*/
     private boolean visible;
@@ -75,6 +92,27 @@ public class EWindow {
             System.err.println("Could not initialize the window.");
             System.exit(-1);
         }
+
+        this.eventKey = new EventKey();
+        this.eventMouseButton = new EventMouseButton();
+        this.eventMouseEnter = new EventMouseEnter();
+        this.eventMouseMovement = new EventMouseMovement();
+        this.eventMouseScroll = new EventMouseScroll();
+        this.eventWindowIconify = new EventWindowIconify();
+        this.eventWindowMaximize = new EventWindowMaximize();
+        this.eventWindowResize = new EventWindowResize();
+        this.eventWindowTryClose = new EventWindowTryClose();
+        this.eventWindowFullscreen = new EventWindowFullscreen();
+
+        glfwSetKeyCallback(getHandle(), (long window, int key, int scancode, int action, int mods) -> callbackInputKey(key, action));
+        glfwSetWindowSizeCallback(getHandle(), ((window, w, h) -> callbackResized(w, h)));
+        glfwSetMouseButtonCallback(getHandle(), (long window, int button, int action, int mods) -> callbackInputMouse(button, action));
+        glfwSetCursorEnterCallback(getHandle(), (long window, boolean entered) -> callbackMouseEnter(entered));
+        glfwSetCursorPosCallback(getHandle(), (long window, double x, double y) -> callbackMouseMove((int) x, (int) y));
+        glfwSetScrollCallback(getHandle(), (long window, double xoffset, double yoffset) -> callbackScroll((int) xoffset, (int) yoffset));
+        glfwSetWindowMaximizeCallback(getHandle(), (long window, boolean maximized) -> callbackMaximize(maximized));
+        glfwSetWindowIconifyCallback(getHandle(), (long window, boolean iconify) -> callbackIconify(iconify));
+        glfwSetWindowCloseCallback(getHandle(), (long window)-> callbackShouldClose());
 
         glfwMakeContextCurrent(getHandle());
         glfwSwapInterval(1);
@@ -130,10 +168,13 @@ public class EWindow {
             this.oldWidth = getWidth();
             this.oldHeight = getHeight();
             glfwSetWindowMonitor(getHandle(), glfwGetPrimaryMonitor(), 0, 0, getVideoMode().width(), getVideoMode().height(), getVideoMode().refreshRate());
+            eventWindowFullscreen.setValues(true);
+            EventSystem.callEvent(eventWindowFullscreen);
         }else if(!fullscreen && isFullscreen()) {
-            System.out.println(oldWidth);
             glfwSetWindowMonitor(getHandle(), MemoryUtil.NULL, 0, 0, oldWidth, oldHeight, 0);
             setPositionCentered();
+            eventWindowFullscreen.setValues(false);
+            EventSystem.callEvent(eventWindowFullscreen);
         }
         if(wasGrabbed)
             setMouseGrabbed(true);
@@ -260,5 +301,51 @@ public class EWindow {
     /**@return True if the window is trying to close.*/
     public boolean isCloseRequest(){
         return glfwWindowShouldClose(getHandle());
+    }
+
+    protected void callbackIconify(boolean iconified){
+        eventWindowIconify.setValues(iconified);
+        EventSystem.callEvent(eventWindowIconify);
+    }
+
+    protected void callbackMaximize(boolean maximized){
+        eventWindowMaximize.setValues(maximized);
+        EventSystem.callEvent(eventWindowMaximize);
+    }
+
+    protected void callbackScroll(int addX, int addY){
+        eventMouseScroll.setValues(addX, addY);
+        EventSystem.callEvent(eventMouseScroll);
+    }
+
+    protected void callbackMouseMove(int x, int y){
+        eventMouseMovement.setValues(oldMousePosX, oldMousePosY, x, y);
+        EventSystem.callEvent(eventMouseMovement);
+        this.oldMousePosX = x;
+        this.oldMousePosY = y;
+    }
+
+    protected void callbackMouseEnter(boolean entered){
+        eventMouseEnter.setValues(entered);
+        EventSystem.callEvent(eventMouseEnter);
+    }
+
+    protected void callbackInputKey(int key, int action){
+        eventKey.setValues(key, action);
+        EventSystem.callEvent(eventKey);
+    }
+
+    protected void callbackInputMouse(int button, int action){
+        eventMouseButton.setValues(button, action);
+        EventSystem.callEvent(eventMouseButton);
+    }
+
+    protected void callbackShouldClose(){
+        EventSystem.callEvent(eventWindowTryClose);
+    }
+
+    protected void callbackResized(int width, int height){
+        eventWindowResize.setValues(width, height, oldWidth, oldHeight);
+        EventSystem.callEvent(eventWindowResize);
     }
 }

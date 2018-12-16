@@ -12,18 +12,25 @@ public class TestEngine {
 
     /**test.TestEngine method to test the engine.*/
     public static void main(String[] args){
+
         System.out.println("Testing the engine...");
+
+        //Creating the window.
         EWindow window = new EWindow("Test engine", 720, 480);
 
+        //Add a listener to test the events.
+        ListenerTest listenerTest = new ListenerTest(window);
+        EventSystem.addListener(listenerTest);
 
-        EventTest event = new EventTest();
-
-        EventSystem.callEvent(event);
+        //Starting a basic loop.
         while(!window.isCloseRequest()){
             GLFW.glfwPollEvents();
             GLFW.glfwSwapBuffers(window.getHandle());
         }
+
+        //Ending the engine.
         window.destroy();
         GLFW.glfwTerminate();
+        System.exit(0);
     }
 }

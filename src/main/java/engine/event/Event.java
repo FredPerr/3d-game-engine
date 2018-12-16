@@ -6,7 +6,7 @@ import java.util.ArrayList;
  *
  * The engine event class is a class to create event and do everything with it.
  */
-public class Event {
+public abstract class Event {
 
     /**List of all the EEvents.*/
     private static ArrayList<Event> events = new ArrayList<>();

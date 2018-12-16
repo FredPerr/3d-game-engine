@@ -21,7 +21,7 @@ public interface IEngine {
 
     /**This method is called every UPS (updates per second). This is set in the loop.
      * Everything with the game update should be in that method.
-     * The inputs should be inside that method.*/
+     * The input should be inside that method.*/
     void update();
 
     /**This method is called every FPS (frames per second). This is set in the loop.
