@@ -1,7 +1,7 @@
 package test;
 
-import engine.ELoader;
-import engine.util.EImage;
+import engine.event.Event;
+import engine.event.EventSystem;
 import engine.window.EWindow;
 import org.lwjgl.glfw.GLFW;
 
@@ -15,6 +15,10 @@ public class TestEngine {
         System.out.println("Testing the engine...");
         EWindow window = new EWindow("Test engine", 720, 480);
 
+
+        EventTest event = new EventTest();
+
+        EventSystem.callEvent(event);
         while(!window.isCloseRequest()){
             GLFW.glfwPollEvents();
             GLFW.glfwSwapBuffers(window.getHandle());
