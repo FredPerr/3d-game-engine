@@ -1,5 +1,6 @@
 package engine.window;
 
+import engine.IEngine;
 import engine.event.EventSystem;
 import engine.event.event.window.*;
 import engine.util.EImage;
@@ -18,10 +19,12 @@ import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Created by KitK4t on 2018-12-15.
- * The EWindow class is a class that provides almost all of the GLFW functions to
+ * The Window class is a class that provides almost all of the GLFW functions to
  * manage a window.
  */
-public class EWindow {
+public class Window {
+
+    private IEngine engine;
 
     /**Events*/
     private EventKey eventKey;
@@ -67,7 +70,8 @@ public class EWindow {
      * @param title Title of the window.
      * @param height Height of the window in pixels.
      * @param width Width of the window in pixels.*/
-    public EWindow(String title, int width, int height){
+    public Window(IEngine engine, String title, int width, int height){
+        this.engine = engine;
         this.title = title;
         GLFWErrorCallback.createPrint(System.err).set();
 
@@ -342,6 +346,7 @@ public class EWindow {
 
     protected void callbackShouldClose(){
         EventSystem.callEvent(eventWindowTryClose);
+        engine.getLoop().stop();
     }
 
     protected void callbackResized(int width, int height){

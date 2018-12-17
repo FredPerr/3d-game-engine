@@ -11,7 +11,7 @@ import java.nio.IntBuffer;
  *
  * The Engine loader class provides many methods to load anything inside the engine.
  */
-public class ELoader {
+public class Loader {
 
     /**Load a LWJGL image with STB.
      * @param path Path from computer root (c:/...)

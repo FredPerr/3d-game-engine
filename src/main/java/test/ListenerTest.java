@@ -3,17 +3,16 @@ package test;
 import engine.event.EventHandler;
 import engine.event.EventListener;
 import engine.event.event.window.*;
-import engine.window.EWindow;
-import org.lwjgl.glfw.GLFW;
+import engine.window.Window;
 
 /**
  * Created by KitK4t on 2018-12-16.
  */
 public class ListenerTest implements EventListener {
 
-    private EWindow window;
+    private Window window;
 
-    public ListenerTest(EWindow window){
+    public ListenerTest(Window window){
         this.window = window;
     }
 

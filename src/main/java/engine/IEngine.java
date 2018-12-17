@@ -1,5 +1,8 @@
 package engine;
 
+import engine.loop.Loop;
+import engine.window.Window;
+
 /**
  * Created by KitK4t on 2018-12-15.
  *
@@ -31,4 +34,13 @@ public interface IEngine {
     /**This method is called when the loop ends.
      * Everything with saving the game and ending the game should be in that method.*/
     void end();
+
+    /**Cleans up the shader, the loader and everything else that needs to be clean.*/
+    void cleanUp();
+
+    /**@return Window of the engine.*/
+    Window getWindow();
+
+    /**@return Loop of the engine.*/
+    Loop getLoop();
 }
