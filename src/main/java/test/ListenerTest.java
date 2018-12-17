@@ -10,12 +10,6 @@ import engine.window.Window;
  */
 public class ListenerTest implements EventListener {
 
-    private Window window;
-
-    public ListenerTest(Window window){
-        this.window = window;
-    }
-
     @EventHandler
     public void onTestKey(EventKey e){
         //System.out.println("Key press: "+e.getKey() + " " + e.getAction());
@@ -43,7 +37,7 @@ public class ListenerTest implements EventListener {
 
     @EventHandler
     public void onTestWindowIconify(EventWindowIconify e){
-        System.out.println("Window iconified: "+ e.isIconified());
+        //System.out.println("Window iconified: "+ e.isIconified());
     }
 
     @EventHandler

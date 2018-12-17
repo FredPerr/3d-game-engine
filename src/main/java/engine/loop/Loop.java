@@ -1,6 +1,6 @@
 package engine.loop;
 
-import engine.IEngine;
+import engine.Engine;
 import org.lwjgl.glfw.GLFW;
 
 /**
@@ -10,13 +10,13 @@ import org.lwjgl.glfw.GLFW;
  */
 public class Loop {
 
-    private IEngine engine;
+    private Engine engine;
     private double timeUps, timeFps;
     private int fps, ups, maxFps, maxUps;
     private boolean running;
 
-    public Loop(int maxFps, int maxUps){
-
+    public Loop(Engine engine, int maxFps, int maxUps){
+        this.engine = engine;
         setMaximumFps(maxFps);
         if(getMaximumFps() < 1)
             setMaximumFps(60);
@@ -24,6 +24,7 @@ public class Loop {
         setMaximumUps(maxUps);
         if(getMaximumUps() < 1)
             setMaximumUps(60);
+        engine.init();
     }
 
     /**Set the frames per second amount.
@@ -82,8 +83,7 @@ public class Loop {
     /**Start the engine. Should store a running variable and set it.
      * Start the loop.
      * @param engine Engine to link the loop with.*/
-    public void start(IEngine engine){
-        this.engine = engine;
+    public void start(){
         if(!isRunning()) {
             this.running = true;
             long initialTime = System.nanoTime();
@@ -93,7 +93,6 @@ public class Loop {
             setFps(0);
             setUps(0);
             long timer = System.currentTimeMillis();
-            engine.init();
             while (running) {
                 GLFW.glfwPollEvents();
                 long currentTime = System.nanoTime();
@@ -144,7 +143,7 @@ public class Loop {
     }
 
     /**@return Engine interface.*/
-    public IEngine getEngine(){
+    public Engine getEngine(){
         return this.engine;
     }
 }

@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
  * This is an STB loaded image.
  * Store image data byte buffer and other parameters of the image.
  */
-public class EImage {
+public class Image {
 
     private ByteBuffer data;
     private int width, height;
@@ -16,7 +16,7 @@ public class EImage {
      * @param data Byte buffer data of the image.
      * @param width Width of the image in pixels.
      * @param height Height of the image in pixels.*/
-    public EImage(ByteBuffer data, int width, int height){
+    public Image(ByteBuffer data, int width, int height){
         this.data = data;
         this.width = width;
         this.height = height;

@@ -3,7 +3,7 @@ package engine.window;
 import engine.IEngine;
 import engine.event.EventSystem;
 import engine.event.event.window.*;
-import engine.util.EImage;
+import engine.util.Image;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWImage;
@@ -132,7 +132,7 @@ public class Window {
 
     /**Set the image of the cursor.
      * @param image Engine image of the cursor.*/
-    public void setCursor(EImage image) {
+    public void setCursor(Image image) {
         cursor = GLFWImage.malloc();
         cursor.set(image.getWidth(), image.getHeight(), image.getData());
         long id = glfwCreateCursor(cursor,0,0);
@@ -141,7 +141,7 @@ public class Window {
 
     /**Set the icon of the window.
      * @param image Engine image of the window icon.*/
-    public void setIcon(EImage image) {
+    public void setIcon(Image image) {
         GLFWImage iconImg = GLFWImage.malloc();
         icon = GLFWImage.malloc(1);
         iconImg.set(image.getWidth(), image.getHeight(), image.getData());

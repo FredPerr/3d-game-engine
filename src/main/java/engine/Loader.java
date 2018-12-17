@@ -1,6 +1,6 @@
 package engine;
 
-import engine.util.EImage;
+import engine.util.Image;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.ByteBuffer;
@@ -16,7 +16,7 @@ public class Loader {
     /**Load a LWJGL image with STB.
      * @param path Path from computer root (c:/...)
      * @return Image created.*/
-    public EImage loadImage(String path){
+    public Image loadImage(String path){
         ByteBuffer image;
         int width, height;
         try(MemoryStack stack = MemoryStack.stackPush()){
@@ -29,6 +29,6 @@ public class Loader {
             width = w.get();
             height = h.get();
         }
-        return new EImage(image, width, height);
+        return new Image(image, width, height);
     }
 }

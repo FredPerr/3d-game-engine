@@ -33,12 +33,8 @@ public class TestEngine extends Engine{
 
     /**Main method to test the engine.*/
     public static void main(String[] args){
-        //Create the engine.
         TestEngine engine = new TestEngine("Test engine", 720, 480, 60,30);
-
-        //Add a listener to test the events.
-        ListenerTest listenerTest = new ListenerTest(engine.getWindow());
-        EventSystem.addListener(listenerTest);
-
+        EventSystem.addListener(new ListenerTest());
+        engine.start();
     }
 }
