@@ -2,9 +2,8 @@ package test;
 
 import engine.Engine;
 import engine.event.EventSystem;
-import engine.loop.Loop;
-import engine.window.Window;
-import org.lwjgl.glfw.GLFW;
+import engine.util.Location;
+import engine.util.MathUtil;
 
 /**
  * Created by KitK4t on 2018-12-15.
