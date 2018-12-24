@@ -26,7 +26,7 @@ public class Window {
 
     private IEngine engine;
 
-    /**Events*/
+    /**Default events*/
     private EventKey eventKey;
     private EventMouseEnter eventMouseEnter;
     private EventMouseButton eventMouseButton;

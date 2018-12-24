@@ -6,7 +6,7 @@ import org.lwjgl.glfw.GLFW;
 /**
  * Created by KitK4t on 2018-12-16.
  *
- * The loop class is a class that manage the refreshment of the engine.
+ * The loop class is a class that manage the refreshment (Frames per second and updates per second) of the engine.
  */
 public class Loop {
 
@@ -15,6 +15,7 @@ public class Loop {
     private int fps, ups, maxFps, maxUps;
     private boolean running;
 
+    /**Creates a loop with an interval of rendering and an interval of updating.*/
     public Loop(Engine engine, int maxFps, int maxUps){
         this.engine = engine;
         setMaximumFps(maxFps);
