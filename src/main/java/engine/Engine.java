@@ -1,8 +1,7 @@
 package engine;
 
-import engine.event.EventListener;
-import engine.event.EventSystem;
 import engine.loop.Loop;
+import engine.resource.ResourceManager;
 import engine.window.Window;
 
 /**
@@ -10,10 +9,12 @@ import engine.window.Window;
  */
 public abstract class Engine implements IEngine {
 
+    private ResourceManager resourceManager;
     private Window window;
     private Loop loop;
 
     public Engine(String title, int width, int height, int maxFps, int maxUps){
+        this.resourceManager = new ResourceManager();
         this.window = new Window(this, title, width, height);
         this.loop = new Loop(this, maxFps, maxUps);
     }
@@ -28,6 +29,11 @@ public abstract class Engine implements IEngine {
     public void cleanUp() {
         //clear shader here.
         //clear loader here. (VAOs, VBOs, textures, sounds)
+    }
+
+    /**@return Resource manager of the engine.*/
+    public ResourceManager getResourceManager(){
+        return this.resourceManager;
     }
 
     public Window getWindow() {
