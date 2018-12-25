@@ -32,16 +32,16 @@ public abstract class Engine implements IEngine {
             getWindow().setIcon(getResourceManager().loadImage(resourceEngineIcon.getFile().getPath()));
     }
 
-    /**Starts the engine. It runs the loop in the loop class.
-     * This method should be the last in your Engine creation.
-     * Every events should be created before it.*/
-    public void start(){
-        getLoop().start();
+    public void cleanUp() {
+        //TODO clear shader here.
+        //TODO clear loader here. (VAOs, VBOs, textures, sounds)
     }
 
-    public void cleanUp() {
-        //clear shader here.
-        //clear loader here. (VAOs, VBOs, textures, sounds)
+    /**Starts the engine. It runs the loop in the loop class.
+     * This method should be the last in your Engine creation.
+     * All the events have to be created before that method.*/
+    public void start(){
+        getLoop().start();
     }
 
     /**@return Resource manager of the engine.*/
