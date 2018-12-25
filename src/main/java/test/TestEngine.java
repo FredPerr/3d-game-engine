@@ -1,9 +1,6 @@
 package test;
 
 import engine.Engine;
-import engine.event.EventSystem;
-import engine.util.Resource;
-import engine.util.ResourceManager;
 
 /**
  * Created by KitK4t on 2018-12-15.
@@ -30,13 +27,9 @@ public class TestEngine extends Engine{
 
     }
 
-    /**Main method to test the engine.*/
     public static void main(String[] args){
         TestEngine engine = new TestEngine("Test engine", 720, 480, 60,30);
-        EventSystem.addListener(new ListenerTest());
-        Resource r = new Resource(ResourceManager.getApplicationFolderPath()+"/assets/textures/LWJGLEngine.png");
-        System.out.println(r.getFile().getName());
-        engine.getWindow().setIcon(engine.getResourceManager().loadImage(r.getFile().getPath()));
+        //EventSystem.addListener(new ListenerTest());
         engine.start();
     }
 }
