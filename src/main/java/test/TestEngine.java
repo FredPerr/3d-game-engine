@@ -1,6 +1,7 @@
 package test;
 
 import engine.Engine;
+import engine.event.EventSystem;
 
 /**
  * Created by KitK4t on 2018-12-15.
@@ -29,7 +30,7 @@ public class TestEngine extends Engine{
 
     public static void main(String[] args){
         TestEngine engine = new TestEngine("Test engine", 720, 480, 60,30);
-        //EventSystem.addListener(new ListenerTest());
+        EventSystem.addListener(new ListenerTest());
         engine.start();
     }
 }
