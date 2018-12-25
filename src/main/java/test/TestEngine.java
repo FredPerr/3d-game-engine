@@ -2,11 +2,8 @@ package test;
 
 import engine.Engine;
 import engine.event.EventSystem;
-import engine.resource.ResourceManager;
-
-import java.awt.image.BufferedImage;
-import java.net.URISyntaxException;
-import java.nio.ByteBuffer;
+import engine.util.Resource;
+import engine.util.ResourceManager;
 
 /**
  * Created by KitK4t on 2018-12-15.
@@ -37,7 +34,7 @@ public class TestEngine extends Engine{
     public static void main(String[] args){
         TestEngine engine = new TestEngine("Test engine", 720, 480, 60,30);
         EventSystem.addListener(new ListenerTest());
-        System.out.println(ResourceManager.getApplicationFolderPath());
+        Resource r = Resource.createResource(ResourceManager.getApplicationFolderPath()+"/assets//textures/LWJGLEngine.png");
         engine.start();
     }
 }

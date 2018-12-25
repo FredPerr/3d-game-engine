@@ -5,15 +5,15 @@ import java.nio.ByteBuffer;
 /**
  * Created by KitK4t on 2018-12-15.
  * This is an STB loaded image.
- * Store image data byte buffer and other parameters of the image.
+ * Store image assets byte buffer and other parameters of the image.
  */
 public class Image {
 
     private ByteBuffer data;
     private int width, height;
 
-    /**Store image data.
-     * @param data Byte buffer data of the image.
+    /**Store image assets.
+     * @param data Byte buffer assets of the image.
      * @param width Width of the image in pixels.
      * @param height Height of the image in pixels.*/
     public Image(ByteBuffer data, int width, int height){
@@ -22,7 +22,7 @@ public class Image {
         this.height = height;
     }
 
-    /**@return Byte buffer of the data of the image.*/
+    /**@return Byte buffer of the assets of the image.*/
     public ByteBuffer getData(){
         return this.data;
     }

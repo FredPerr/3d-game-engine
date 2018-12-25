@@ -1,15 +1,10 @@
-package engine.resource;
+package engine.util;
 
-import engine.util.Image;
 import org.lwjgl.system.MemoryStack;
-import org.lwjgl.system.MemoryUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -20,34 +15,49 @@ import java.nio.IntBuffer;
  */
 public class ResourceManager {
 
-    private String dataFolderPath;
-
-    /**Main constructor of the resource manager class.
-     * @param dataFolderPath Path of the folder where all the jar application is.
-     *        Every resource will be inside that folder.*/
-    public ResourceManager(String dataFolderPath){
-        this.dataFolderPath = dataFolderPath;
+    /**
+     * Main constructor of the resource manager class..
+     */
+    public ResourceManager() {
+        checkAssets();
     }
 
-    /**@return File of the runnable jar application.
-     * @throws URISyntaxException If*/
+    /**
+     * Check for assets to be copied in the asset folder.
+     */
+    public void checkAssets() {
+        File defaultAssetsFolder = new File(getApplicationFolderPath() + "/assets");//TODO custom name for the assets folder
+
+        //Create the external folder if it does not already exist.
+        if (!defaultAssetsFolder.exists())
+            defaultAssetsFolder.mkdir();
+    }
+    /**
+     * @return File of the runnable jar application.
+     * @throws URISyntaxException If
+     */
     public static File getApplicationFile() {
         try {
             return new File(ResourceManager.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-        }catch (URISyntaxException e){
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    /**@return Path of the runnable application with the application jar name.*/
+    /**
+     * @return Path of the runnable application with the application jar name.
+     */
     public static String getApplicationFolderPath() {
         return getApplicationFile().getParent();
     }
 
-    /**Load a LWJGL image with STB.
+    /**
+     * Load a LWJGL image with STB.
+     *
      * @param path Path of the image from the computer root.
-     * @return Image created.*/
+     * @return Image created.
+     */
     public Image loadSTBImage(String path) {
         ByteBuffer image;
         int width, height;
@@ -64,16 +74,19 @@ public class ResourceManager {
         return new Image(image, width, height);
     }
 
-    /**Load a Buffered image from a path outside or inside the application.
+    /**
+     * Load a Buffered image from a path outside or inside the application.
      * First get the out and if the path is null it search for the inside file.
+     *
      * @param path Path of the file. (C:/... or src/main/...)
-     * @return Buffered image.*/
+     * @return Buffered image.
+     */
     public BufferedImage loadBufferedImage(String path) {
         try {
             File f = new File(path);
             if (f.exists())
                 return ImageIO.read(f);
-             else
+            else
                 return ImageIO.read(ResourceManager.class.getResourceAsStream(path));
         } catch (IOException e) {
             e.printStackTrace();
