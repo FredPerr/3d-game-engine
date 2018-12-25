@@ -5,61 +5,64 @@ import java.util.ArrayList;
 
 /**
  * The resource class provide a hierarchical way to load files
- * from the computer of the user and to the web.
+ * from the computer of the user to the web in case of need.
  *
- * TODO url safety for null files.
+ * TODO Get the missing files from URLs and download them. An update system with the version of the file could be added.
  */
 public class Resource {
 
     private static ArrayList<Resource> resources = new ArrayList<>();
 
-    private File externalFile;
+    private File assetFile;
 
     /**
-     * Create a resource.
-     * @param externalPath Path from the computer root to the external file(C:/...).
+     * Create a resource and add it to the list of the resources if it exits.
+     * Otherwise, the resource is not taken in account.
+     * @param assetFilePath Path from the computer root to the asset file including it and its extension (C:/../../../test.png).
      */
-    private Resource(String externalPath) {
-        this.externalFile = new File(externalPath);
-        if(this.externalFile == null) {
-            System.err.println("Could not load the file: \n" + externalFile.getPath());
+    public Resource(String assetFilePath) {
+        this.assetFile = new File(assetFilePath);
+        resources.add(this);
+        if(this.assetFile == null || !this.assetFile.exists()) {
+            System.err.println("Could not load the file: \n" + assetFile.getPath());
             resources.remove(this);
         }
     }
 
-    /**@return File of the resource (external).*/
+    /**@return File of the resource (from the computer).
+     * This file need to be valid (isValid() method for more details).
+     * If not, the return value will be null.*/
     public File getFile(){
-        return getExternalFile();
+        return this.assetFile;
     }
 
     /**
-     * @return External file. May be null.
+     * Set the file of the asset file. The file must be created.
+     * Otherwise, it will not change it and returns a error message.
+     * If the resource was not into the resource list, it will add it.
+     * @param assetFile Asset file to set. The file must exist.
      */
-    public File getExternalFile() {
-        return this.externalFile;
+    public void setAssetFile(File assetFile) {
+        if(assetFile == null || !assetFile.exists()) {
+            System.err.println("Could not change the file : \n" + this.assetFile.getPath() + "\nto the file\n"+assetFile.getPath());
+            return;
+        }
+        this.assetFile = assetFile;
+        if(!resources.contains(this))
+            resources.add(this);
+    }
+
+    /**@return True if and only if the file is not null,
+     *  the file exists in the asset folder from the path of the computer root (C:/../../..),
+     *  the resource is into the resources list.*/
+    private boolean isValid(){
+        return assetFile != null && assetFile.exists() && resources.contains(this);
     }
 
     /**
-     * Set the path of the external file.
-     *
-     * @param externalFile External file.
-     */
-    public void setExternalFile(File externalFile) {
-        this.externalFile = externalFile;
-    }
-
-    /**
-     * Create a resource.
-     * @param externalPath Path from the computer root to the external file(C:/...).
-     */
-    public static Resource createResource(String externalPath) {
-        Resource r = new Resource(externalPath);
-        resources.add(r);
-        return r;
-    }
-
-    /**
-     * @return Resources created.
+     * @return Resources created that are valid which includes the existing files.
+     * You should not remove or add resource with that method by getting the list
+     * because everything is automatic and manual changes could create errors.
      */
     public static ArrayList<Resource> getResources() {
         return resources;

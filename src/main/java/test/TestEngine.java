@@ -34,7 +34,9 @@ public class TestEngine extends Engine{
     public static void main(String[] args){
         TestEngine engine = new TestEngine("Test engine", 720, 480, 60,30);
         EventSystem.addListener(new ListenerTest());
-        Resource r = Resource.createResource(ResourceManager.getApplicationFolderPath()+"/assets//textures/LWJGLEngine.png");
+        Resource r = new Resource(ResourceManager.getApplicationFolderPath()+"/assets/textures/LWJGLEngine.png");
+        System.out.println(r.getFile().getName());
+        engine.getWindow().setIcon(engine.getResourceManager().loadImage(r.getFile().getPath()));
         engine.start();
     }
 }

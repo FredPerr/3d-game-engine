@@ -12,11 +12,11 @@ public class Image {
     private ByteBuffer data;
     private int width, height;
 
-    /**Store image assets.
+    /**Store image data.
      * @param data Byte buffer assets of the image.
      * @param width Width of the image in pixels.
      * @param height Height of the image in pixels.*/
-    public Image(ByteBuffer data, int width, int height){
+    private Image(ByteBuffer data, int width, int height){
         this.data = data;
         this.width = width;
         this.height = height;
@@ -35,5 +35,13 @@ public class Image {
     /**@return Height of the image in pixels.*/
     public int getHeight(){
         return this.height;
+    }
+
+    /**Store image data.
+     * @param data Byte buffer assets of the image.
+     * @param width Width of the image in pixels.
+     * @param height Height of the image in pixels.*/
+    static Image createImage(ByteBuffer data, int width, int height){
+        return new Image(data, width, height);
     }
 }

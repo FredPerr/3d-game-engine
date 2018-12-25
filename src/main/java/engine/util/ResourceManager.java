@@ -11,30 +11,17 @@ import java.nio.IntBuffer;
 
 /**
  * Created by KitK4t on 2018-12-16.
- * The Engine loader class provides many methods to load anything inside the engine.
+ * The Engine resource manager class provides many methods to load anything inside the engine.
+ * Also helps to manager files.
  */
 public class ResourceManager {
 
     /**
-     * Main constructor of the resource manager class..
-     */
-    public ResourceManager() {
-        checkAssets();
-    }
-
-    /**
-     * Check for assets to be copied in the asset folder.
-     */
-    public void checkAssets() {
-        File defaultAssetsFolder = new File(getApplicationFolderPath() + "/assets");//TODO custom name for the assets folder
-
-        //Create the external folder if it does not already exist.
-        if (!defaultAssetsFolder.exists())
-            defaultAssetsFolder.mkdir();
-    }
-    /**
+     * This method is static and can be access from everywhere in the code (fully independent).
+     * However, this method have to be called from a runnable jar compiled. Errors or mistakes could occur.
+     *
      * @return File of the runnable jar application.
-     * @throws URISyntaxException If
+     * If the a problem is encountered, it returns null.
      */
     public static File getApplicationFile() {
         try {
@@ -46,51 +33,36 @@ public class ResourceManager {
     }
 
     /**
-     * @return Path of the runnable application with the application jar name.
+     * This method is static and can be access from everywhere in the code (fully independent).
+     *
+     * @return Path of the runnable application`s folder.
+     * This method simply returns the parent of the jar runnable file.
      */
     public static String getApplicationFolderPath() {
         return getApplicationFile().getParent();
     }
 
     /**
-     * Load a LWJGL image with STB.
-     *
-     * @param path Path of the image from the computer root.
-     * @return Image created.
+     * Load a LWJGL image with STB library. Every image should be created from this method.
+     * @param path Path of the image from the computer root (C:/...).
+     * @return Image created with STB. If the image could not be reached,
+     * it returns null after a print out message with the wrong path used.
      */
-    public Image loadSTBImage(String path) {
+    public Image loadImage(String path) {
         ByteBuffer image;
         int width, height;
         try (MemoryStack stack = MemoryStack.stackPush()) {
-            IntBuffer comp = stack.mallocInt(1);
-            IntBuffer w = stack.mallocInt(1);
-            IntBuffer h = stack.mallocInt(1);
+            IntBuffer comp = stack.mallocInt(1),
+                    w = stack.mallocInt(1),
+                    h = stack.mallocInt(1);
             image = org.lwjgl.stb.STBImage.stbi_load(path, w, h, comp, 4);
-            if (image == null)
+            if (image == null) {
                 System.err.println("Could not load the image: " + path);
+                return null;
+            }
             width = w.get();
             height = h.get();
         }
-        return new Image(image, width, height);
-    }
-
-    /**
-     * Load a Buffered image from a path outside or inside the application.
-     * First get the out and if the path is null it search for the inside file.
-     *
-     * @param path Path of the file. (C:/... or src/main/...)
-     * @return Buffered image.
-     */
-    public BufferedImage loadBufferedImage(String path) {
-        try {
-            File f = new File(path);
-            if (f.exists())
-                return ImageIO.read(f);
-            else
-                return ImageIO.read(ResourceManager.class.getResourceAsStream(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return Image.createImage(image, width, height);
     }
 }
