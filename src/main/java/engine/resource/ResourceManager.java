@@ -10,6 +10,7 @@ import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
@@ -18,6 +19,31 @@ import java.nio.IntBuffer;
  * The Engine loader class provides many methods to load anything inside the engine.
  */
 public class ResourceManager {
+
+    private String dataFolderPath;
+
+    /**Main constructor of the resource manager class.
+     * @param dataFolderPath Path of the folder where all the jar application is.
+     *        Every resource will be inside that folder.*/
+    public ResourceManager(String dataFolderPath){
+        this.dataFolderPath = dataFolderPath;
+    }
+
+    /**@return File of the runnable jar application.
+     * @throws URISyntaxException If*/
+    public static File getApplicationFile() {
+        try {
+            return new File(ResourceManager.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+        }catch (URISyntaxException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**@return Path of the runnable application with the application jar name.*/
+    public static String getApplicationFolderPath() {
+        return getApplicationFile().getParent();
+    }
 
     /**Load a LWJGL image with STB.
      * @param path Path of the image from the computer root.

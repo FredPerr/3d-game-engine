@@ -2,8 +2,10 @@ package test;
 
 import engine.Engine;
 import engine.event.EventSystem;
+import engine.resource.ResourceManager;
 
 import java.awt.image.BufferedImage;
+import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 
 /**
@@ -35,6 +37,7 @@ public class TestEngine extends Engine{
     public static void main(String[] args){
         TestEngine engine = new TestEngine("Test engine", 720, 480, 60,30);
         EventSystem.addListener(new ListenerTest());
+        System.out.println(ResourceManager.getApplicationFolderPath());
         engine.start();
     }
 }

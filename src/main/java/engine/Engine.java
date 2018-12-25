@@ -4,6 +4,8 @@ import engine.loop.Loop;
 import engine.resource.ResourceManager;
 import engine.window.Window;
 
+import java.net.URISyntaxException;
+
 /**
  * Created by KitK4t on 2018-12-16.
  */
@@ -14,7 +16,7 @@ public abstract class Engine implements IEngine {
     private Loop loop;
 
     public Engine(String title, int width, int height, int maxFps, int maxUps){
-        this.resourceManager = new ResourceManager();
+        this.resourceManager = new ResourceManager(ResourceManager.getApplicationFolderPath());
         this.window = new Window(this, title, width, height);
         this.loop = new Loop(this, maxFps, maxUps);
     }
