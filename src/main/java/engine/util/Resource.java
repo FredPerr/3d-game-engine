@@ -55,7 +55,7 @@ public class Resource {
     /**@return True if and only if the file is not null,
      *  the file exists in the asset folder from the path of the computer root (C:/../../..),
      *  the resource is into the resources list.*/
-    private boolean isValid(){
+    public boolean isValid(){
         return assetFile != null && assetFile.exists() && resources.contains(this);
     }
 
