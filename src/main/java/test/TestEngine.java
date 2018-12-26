@@ -30,17 +30,12 @@ public class TestEngine extends Engine{
         });
     }
 
-    public void update() {
-
-    }
-
     public void render() {
         mesh.render(GL11.GL_TRIANGLES);
     }
 
-    public void end() {
-
-    }
+    public void end() {}
+    public void update() {}
 
     public static void main(String[] args){
         TestEngine engine = new TestEngine("Test engine", 720, 480, 60,30);

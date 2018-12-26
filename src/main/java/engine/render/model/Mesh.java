@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class Mesh {
 
-    /**All the vertex array objects*/
+    /**All the vertex array objects.*/
     public static List<Integer> VAOs = new ArrayList<>();
-    /**All the vertex buffer objects*/
+    /**All the vertex buffer objects.*/
     public static List<Integer> VBOs = new ArrayList<>();
 
     private int vaoId, vertexAmount;
@@ -29,67 +29,12 @@ public class Mesh {
      * 0 of the VAO.
      *
      * @param vertices
-     *            - The 3D positions of each vertex in the geometry (x,y,z).
-     * @return The loaded model.
+     *            - The 3D positions of each vertex in the geometry. X,Y,Z coordinate system.
      */
     public Mesh(float[] vertices) {
         this.vaoId = createVAO();
         this.vertexAmount = vertices.length/3;
         storeDataInAttributeList(0, vertices);
-        unbindVAO();
-    }
-
-    /**
-     * @return The ID of the VAO which contains the data about all the geometry
-     *         of this model.
-     */
-    public int getVaoId() {
-        return this.vaoId;
-    }
-
-    /**
-     * @return The number of vertices in the mesh.
-     */
-    public int getVertexAmount() {
-        return this.vertexAmount;
-    }
-
-    /**
-     * Unbinds the VAO after we're finished using it. If we want to edit or use
-     * the VAO we would have to bind it again first.
-     */
-    public void unbindVAO() {
-        GL30.glBindVertexArray(0);
-    }
-
-    /**Binds the VAO to OpenGL and it is ready to be render.*/
-    public void bindVAO(){
-        GL30.glBindVertexArray(getVaoId());
-    }
-
-    /**
-     * Renders a model to the screen.
-     *
-     * Before we can render a VAO it needs to be made active, and we can do this
-     * by binding it. We also need to enable the relevant attributes of the VAO,
-     * which in this case is just attribute 0 where we stored the position data.
-     *
-     * The VAO can then be rendered to the screen using glDrawArrays(). We tell
-     * it what type of shapes to render and the number of vertices that it needs
-     * to render.
-     *
-     * After rendering we unbind the VAO and disable the attribute.
-     *
-     * @param renderMode
-     *            - The mode to render the mesh (GL11.xx) -> TRIANGLES, POINTS, TRIANGLES_STRIP, ...
-     *            <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glBegin.xml">Begin modes<a/>
-     */
-    public void render(int renderMode){
-        //TODO abstract later on.
-        bindVAO();
-        GL20.glEnableVertexAttribArray(0);
-        GL11.glDrawArrays(renderMode, 0, getVertexAmount());
-        GL20.glDisableVertexAttribArray(0);
         unbindVAO();
     }
 
@@ -111,6 +56,60 @@ public class Mesh {
         VAOs.add(vaoID);
         GL30.glBindVertexArray(vaoID);
         return vaoID;
+    }
+
+    /**
+     * Unbinds the VAO after we're finished using it. If we want to edit or use
+     * the VAO we would have to bind it again first.
+     */
+    public void unbindVAO() {
+        GL30.glBindVertexArray(0);
+    }
+
+    /**Binds the VAO to OpenGL and it is ready to be render.
+     * Should be unbind after rendering.*/
+    public void bindVAO(){
+        GL30.glBindVertexArray(getVaoId());
+    }
+
+    /**
+     * Renders a model to the screen.
+     *
+     * Before we can render a VAO it needs to be made active, and we can do this
+     * by binding it. We also need to enable the relevant attributes of the VAO,
+     * which in this case is just attribute 0 where we stored the position data.
+     *
+     * The VAO can then be rendered to the screen using glDrawArrays(). We tell
+     * it what type of shapes to render and the number of vertices that it needs
+     * to render.
+     *
+     * After rendering we unbind the VAO and disable the attribute.
+     *
+     * @param renderMode
+     *            - The mode to render the mesh (GL11.xx) -> TRIANGLES, POINTS, LINES, ... See the link for more details:
+     *            <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glBegin.xml">Begin modes<a/>
+     */
+    public void render(int renderMode){
+        bindVAO();
+        GL20.glEnableVertexAttribArray(0);
+        GL11.glDrawArrays(renderMode, 0, getVertexAmount());
+        GL20.glDisableVertexAttribArray(0);
+        unbindVAO();
+    }
+
+    /**
+     * @return The ID of the VAO which contains the data about all the geometry
+     *         of this model.
+     */
+    public int getVaoId() {
+        return this.vaoId;
+    }
+
+    /**
+     * @return The number of vertices in the mesh / 3D locations.
+     */
+    public int getVertexAmount() {
+        return this.vertexAmount;
     }
 
     /**
