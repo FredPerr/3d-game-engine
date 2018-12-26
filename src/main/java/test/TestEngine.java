@@ -3,6 +3,10 @@ package test;
 import engine.Engine;
 import engine.event.EventSystem;
 import engine.render.model.Mesh;
+import engine.render.model.Texture;
+import engine.render.model.TexturedMesh;
+import engine.util.Resource;
+import engine.util.ResourceManager;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -15,6 +19,14 @@ public class TestEngine extends Engine{
     }
 
     public void init() {
+
+        float[] textureCoordinates = new float[]{
+                0,0,
+                0,1,
+                1,1,
+                1,0
+        };
+
         getWindow().setClearColor(0.2f,1,0.2f);
         Mesh mesh = new Mesh(new float[]{
                 -0.5f, 0.5f, 0f,//v0
@@ -24,8 +36,13 @@ public class TestEngine extends Engine{
         }, new int[]{
                 0,1,3,//top left triangle (v0, v1, v3)
                 3,1,2//bottom right triangle (v3, v1, v2)
-        }, GL11.GL_TRIANGLES);
-        getDefaultRenderer().addEntity(mesh);
+        }, null
+                , GL11.GL_TRIANGLES);
+        getDefaultRenderer().addEntity(
+                new TexturedMesh(mesh,
+                        new Texture(
+                                new Resource(ResourceManager.getApplicationFolderPath()+"/assets/textures/test.png"),
+                                GL11.GL_NEAREST)));
     }
 
     public void end() {}

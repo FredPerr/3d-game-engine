@@ -16,5 +16,12 @@ public class DefaultShader extends ShaderProgram {
     /**Define the attribute passed in parameters to the vertex shader input stream.*/
     protected void bindAttributes() {
         bindAttribute(0, "location");
+        bindAttribute(1, "textureCoordinates");
+    }
+
+
+
+    protected void linkUniforms() {
+        addUniformLocation("usesTexture");
     }
 }

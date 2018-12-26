@@ -1,12 +1,16 @@
 package engine;
 
 import engine.render.Renderer;
+import engine.render.model.Texture;
 import engine.render.shader.DefaultShader;
+import engine.util.Image;
 import engine.window.Loop;
 import engine.render.model.Mesh;
 import engine.util.Resource;
 import engine.util.ResourceManager;
 import engine.window.Window;
+import org.lwjgl.opengl.GL15;
+import org.lwjgl.opengl.GL30;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +42,7 @@ public abstract class Engine implements IEngine {
 
         //Set the icon to the engine if the resource is valid.
         if(resourceEngineIcon.isValid())
-            getWindow().setIcon(getResourceManager().loadImage(resourceEngineIcon.getFile().getPath()));
+            getWindow().setIcon(Image.createImage(resourceEngineIcon.getFile().getPath()));
     }
 
     /**Add a renderer to the engine.
@@ -61,12 +65,16 @@ public abstract class Engine implements IEngine {
                 renderers.remove(renderer);
     }
 
-    /**Cleans up the shader, the loader and everything else that needs to be clean.*/
+    /**Cleans up the shader, the VAOs/VBOs, sounds, textures and everything else that needs to be clean.*/
     public void cleanUp() {
         for(Renderer r : renderers)
             r.getShader().cleanUp();
-        Mesh.cleanUp();
-        //TODO clear textures, sounds)
+        for (int vao : Mesh.VAOs)
+            GL30.glDeleteVertexArrays(vao);
+        for (int vbo : Mesh.VBOs)
+            GL15.glDeleteBuffers(vbo);
+        for(int texture : Texture.textures)
+            GL15.glDeleteTextures(texture);
     }
 
     /**Render everything in the engine. Starts the shader, render, stop the shader

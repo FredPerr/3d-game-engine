@@ -36,22 +36,6 @@ public class Resource {
         return this.assetFile;
     }
 
-    /**
-     * Set the file of the asset file. The file must be created.
-     * Otherwise, it will not change it and returns a error message.
-     * If the resource was not into the resource list, it will add it.
-     * @param assetFile Asset file to set. The file must exist.
-     */
-    public void setAssetFile(File assetFile) {
-        if(assetFile == null || !assetFile.exists()) {
-            System.err.println("Could not change the file : \n" + this.assetFile.getPath() + "\nto the file\n"+assetFile.getPath());
-            return;
-        }
-        this.assetFile = assetFile;
-        if(!resources.contains(this))
-            resources.add(this);
-    }
-
     /**@return True if and only if the file is not null,
      *  the file exists in the asset folder from the path of the computer root (C:/../../..),
      *  the resource is into the resources list.*/

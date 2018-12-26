@@ -1,15 +1,28 @@
 package engine.render.shader;
 
+import engine.util.Location;
 import engine.util.Resource;
 import engine.util.ResourceManager;
+import org.joml.Matrix4f;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**A shader program is a GLSL way to pass begin with vertex and to end with
  * pixels by performing many actions to have lights, color and every other
  * 3D graphic effects.*/
 public abstract class ShaderProgram {
 
+    /**Float buffer used to load matrices into the shader.*/
+    private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
+    /**Location of all the uniform locations.*/
+    private List<Integer> uniformLocations;
     /**Unique ID of the shader. This ID is given by OpenGL.*/
     private int programShaderId;
     /**Unique ID of the vertex part of the shader. This ID is given by OpenGL.*/
@@ -34,10 +47,15 @@ public abstract class ShaderProgram {
         bindAttributes();
         GL20.glLinkProgram(programShaderId);
         GL20.glValidateProgram(programShaderId);
+        uniformLocations = new ArrayList<>();
+        linkUniforms();
     }
 
     /**Define the attribute passed in parameters to the vertex shader input stream.*/
     protected abstract void bindAttributes();
+
+    /**Loads and define the locations all the uniforms of the shader.*/
+    protected abstract void linkUniforms();
 
     /**Start using the shader. This method should be called every render.*/
     public void start(){
@@ -68,6 +86,18 @@ public abstract class ShaderProgram {
         GL20.glBindAttribLocation(programShaderId, attribute, variableName);
     }
 
+    /**Get the location of an uniform variable in the shader.
+     * @param uniformName Name of the uniform.
+     * @return Location id of the uniform.*/
+    protected void addUniformLocation(String uniformName){
+        uniformLocations.add(GL20.glGetUniformLocation(programShaderId, uniformName));
+    }
+
+    /**@return Locations of all the uniform.*/
+    public List<Integer> getUniformLocations(){
+        return this.uniformLocations;
+    }
+
     /**Load a shader to OpenGL and creates an ID.
      * It compile the shader.
      * @param shaderSource Source text of the shader file.
@@ -85,5 +115,47 @@ public abstract class ShaderProgram {
             System.exit(-1);
         }
         return shaderID;
+    }
+
+    /**Loads a value true or false to the shader into an uniform.
+     * It is really important to set the uniform value in the shader as
+     * a float because it is not possible to load boolean from the code.
+     * @param location Location id of the uniform.
+     * @param value Value to set to the uniform.*/
+    public void loadUniformBoolean(int location, boolean value){
+        float floatValue = 0;
+        if(value)
+            floatValue = 1;
+        GL20.glUniform1f(location, floatValue);
+    }
+
+    /**Loads a float value to the shader into an uniform.
+     * @param location Location id of the uniform.
+     * @param value Value of the uniform.*/
+    public void loadUniformFloat(int location, float value){
+        GL20.glUniform1f(location, value);
+    }
+
+    /**Loads a integer value to the shader into an uniform.
+     * @param location Location id of the uniform.
+     * @param value Value of the uniform.*/
+    public void loadUniformInt(int location, int value){
+        GL20.glUniform1i(location, value);
+    }
+
+    /**Loads a vector3f (location) value to the shader into an uniform.
+     * @param location Location id of the uniform.
+     * @param value Value of the uniform.*/
+    public void loadUniformLocation(int location, Location value){
+        GL20.glUniform3f(location, value.getX(), value.getY(), value.getZ());
+    }
+
+    /**Loads a matrix 4f value to the shader into an uniform.
+     * @param location Location id of the uniform.
+     * @param value Value of the uniform.*/
+    public void loadUniformMatrix(int location, Matrix4f value){
+        value.set(matrixBuffer);
+        matrixBuffer.flip();
+        GL20.glUniformMatrix4fv(location, false, matrixBuffer);
     }
 }

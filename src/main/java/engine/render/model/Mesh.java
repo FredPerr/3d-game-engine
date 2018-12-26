@@ -39,6 +39,8 @@ public class Mesh {
     private int vertexAmount;
     /**The way to connect the vertices.*/
     private int renderMode;
+    /**True if the model uses a texture.*/
+    private boolean useTexture;
 
     /**
      * Creates a VAO and stores the positions' data of the vertices
@@ -50,17 +52,25 @@ public class Mesh {
      * @param indices The order to use the vertices and to connect them.
      *                The first index match the index of the vertex
      *                instantiation.
+     * @param textureCoordinates Coordinates of the texture on the mesh if used later.
+     *                           Set to null to not use texture for this model
      * @param renderMode The mode to render the mesh (GL11.xx) -> TRIANGLES, POINTS,
      *                   LINES, ... See the link for more details: <a href=
      *                   "https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glBegin.xml">
      *                   Begin modes<a/>
      */
-    public Mesh(float[] vertices, int[] indices, int renderMode) {
+    public Mesh(float[] vertices, int[] indices, float[] textureCoordinates, int renderMode) {
         this.vaoId = createVAO();
         this.vertexAmount = indices.length;
         this.renderMode = renderMode;
+        if(textureCoordinates == null)
+            this.useTexture = false;
+        else
+            this.useTexture = true;
         bindIndicesBuffer(indices);
-        storeDataInAttributeList(0, vertices);
+        storeDataInAttributeList(0, 3, vertices);
+        if(useTexture)
+            storeDataInAttributeList(1,2, textureCoordinates);
         unbindVAO();
     }
 
@@ -129,27 +139,6 @@ public class Mesh {
     }
 
     /**
-     * Renders a model to the screen.
-     *
-     * Before we can render a VAO it needs to be made active, and we can do this
-     * by binding it. We also need to enable the relevant attributes of the VAO,
-     * which in this case is just attribute 0 where we stored the position data.
-     *
-     * The VAO can then be rendered to the screen using glDrawArrays(). We tell
-     * it what type of shapes to render and the number of vertices that it needs
-     * to render.
-     *
-     * After rendering we unbind the VAO and disable the attribute.
-     */
-    public void render(){
-        bindVAO();
-        GL20.glEnableVertexAttribArray(0);
-        GL11.glDrawElements(renderMode, getVertexAmount(), GL11.GL_UNSIGNED_INT, 0);
-        GL20.glDisableVertexAttribArray(0);
-        unbindVAO();
-    }
-
-    /**
      * @return The ID of the VAO which link it to OpenGL and can access the
      * data about all the geometry of this model.
      */
@@ -170,16 +159,9 @@ public class Mesh {
         return this.renderMode;
     }
 
-    /**
-     * Deletes all the VAOs and VBOs when the game is closed. VAOs and VBOs are
-     * located in video memory.
-     */
-    public static void cleanUp() {
-        for (int vao : VAOs)
-            GL30.glDeleteVertexArrays(vao);
-        for (int vbo : VBOs)
-            GL15.glDeleteBuffers(vbo);
-
+    /**@return Is using texture on this model.*/
+    public boolean isUsingTexture(){
+        return this.useTexture;
     }
 
     /**
@@ -211,17 +193,19 @@ public class Mesh {
      * @param attributeNumber
      *            The number of the attribute of the VAO where the data is to
      *            be stored.
+     * @param attributeSize Size of the data stored (3 values per data equals
+     *                      3 like vertices, 2D textures coordinates should be 2.)
      * @param data
      *            The geometry data to be stored in the VAO, in this case the
      *            positions of the vertices.
      */
-    private static void storeDataInAttributeList(int attributeNumber, float[] data) {
+    private static void storeDataInAttributeList(int attributeNumber, int attributeSize, float[] data) {
         int vboID = GL15.glGenBuffers();
         VBOs.add(vboID);
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
         FloatBuffer buffer = BuffUtil.storeDataInFloatBuffer(data);
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
-        GL20.glVertexAttribPointer(attributeNumber, 3, GL11.GL_FLOAT, false, 0, 0);
+        GL20.glVertexAttribPointer(attributeNumber, attributeSize, GL11.GL_FLOAT, false, 0, 0);
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
     }
 }
