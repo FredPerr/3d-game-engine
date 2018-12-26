@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +29,13 @@ public class Mesh {
      * Creates a VAO and stores the position data of the vertices into attribute
      * 0 of the VAO.
      *
-     * @param vertices
-     *            - The 3D positions of each vertex in the geometry. X,Y,Z coordinate system.
+     * @param vertices The 3D positions of each vertex in the geometry. X,Y,Z coordinate system.
+     * @param indices The order to use the vertices and to connect them.
      */
-    public Mesh(float[] vertices) {
+    public Mesh(float[] vertices, int[] indices) {
         this.vaoId = createVAO();
-        this.vertexAmount = vertices.length/3;
+        this.vertexAmount = indices.length;
+        bindIndicesBuffer(indices);
         storeDataInAttributeList(0, vertices);
         unbindVAO();
     }
@@ -92,7 +94,7 @@ public class Mesh {
     public void render(int renderMode){
         bindVAO();
         GL20.glEnableVertexAttribArray(0);
-        GL11.glDrawArrays(renderMode, 0, getVertexAmount());
+        GL11.glDrawElements(renderMode, getVertexAmount(), GL11.GL_UNSIGNED_INT, 0);
         GL20.glDisableVertexAttribArray(0);
         unbindVAO();
     }
@@ -165,5 +167,39 @@ public class Mesh {
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
         GL20.glVertexAttribPointer(attributeNumber, 3, GL11.GL_FLOAT, false, 0, 0);
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+    }
+
+    /**
+     * Creates an index buffer, binds the index buffer to the currently active
+     * VAO, and then fills it with our indices.
+     *
+     * The index buffer is different from other data that we might store in the
+     * attributes of the VAO. When we stored the positions we were storing data
+     * about each vertex. The positions were "attributes" of each vertex. Data
+     * like that is stored in an attribute list of the VAO.
+     *
+     * The index buffer however does not contain data about each vertex. Instead
+     * it tells OpenGL how the vertices should be connected. Each VAO can only
+     * have one index buffer associated with it. This is why we don't store the
+     * index buffer in a certain attribute of the VAO; each VAO has one special
+     * "slot" for an index buffer and simply binding the index buffer binds it
+     * to the currently active VAO. When the VAO is rendered it will use the
+     * index buffer that is bound to it.
+     *
+     * This is also why we don't unbind the index buffer, as that would unbind
+     * it from the VAO.
+     *
+     * Note that we tell OpenGL that this is an index buffer by using
+     * "GL_ELEMENT_ARRAY_BUFFER" instead of "GL_ARRAY_BUFFER". This is how
+     * OpenGL knows to bind it as the index buffer for the current VAO.
+     *
+     * @param indices
+     */
+    private void bindIndicesBuffer(int[] indices) {
+        int vboId = GL15.glGenBuffers();
+        VBOs.add(vboId);
+        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboId);
+        IntBuffer buffer = BuffUtil.storeDataInIntBuffer(indices);
+        GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
     }
 }
