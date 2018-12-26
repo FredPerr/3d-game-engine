@@ -47,6 +47,8 @@ public class Window {
     /**Icon GLFW image buffer.*/
     private GLFWImage.Buffer icon;
 
+    private float[] clearColor;
+
     /**Title of the window. GLFW does not provide a method to get it so it is stored here.*/
     private String title;
 
@@ -71,6 +73,7 @@ public class Window {
      * @param height Height of the window in pixels.
      * @param width Width of the window in pixels.*/
     public Window(IEngine engine, String title, int width, int height){
+        this.clearColor = new float[]{0,0,0};
         this.engine = engine;
         this.title = title;
         GLFWErrorCallback.createPrint(System.err).set();
@@ -121,13 +124,28 @@ public class Window {
         glfwMakeContextCurrent(getHandle());
         glfwSwapInterval(1);
         GL.createCapabilities();
-        GL11.glClearColor(0,0,0,0);
-
-        GL11.glEnable(GL11.GL_DEPTH_TEST | GL11.GL_DEPTH_BUFFER_BIT);
 
         setPositionCentered();
         setIconified(false);
         setVisible(true);
+    }
+
+    /**Refresh the clear color and clear the screen pixels to prepare the next render.*/
+    void clearScreen(){
+        GL11.glClearColor(getClearColor()[0],getClearColor()[1],getClearColor()[2],0);
+        GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_COLOR_BUFFER_BIT);
+    }
+
+    /**Set the clear background color of the window.
+     * @param r Red value from 0f to 1f.
+     * @param g Green value from 0f to 1f.
+     * @param b Blue value from 0f to 1f.
+     *
+     * */
+    public void setClearColor(float r, float g, float b){
+        clearColor[0] = r;
+        clearColor[1] = g;
+        clearColor[2] = b;
     }
 
     /**Set the image of the cursor.
@@ -223,6 +241,12 @@ public class Window {
     public void setTitle(String title) {
         this.title = title;
         glfwSetWindowTitle(getHandle(), title);
+    }
+
+    /**@return Clear color of the window.
+     * RGB channel order with values from 0f to 1f.*/
+    public float[] getClearColor(){
+        return this.clearColor;
     }
 
     /**@return Width of the window in pixels.*/

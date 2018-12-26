@@ -1,7 +1,8 @@
-package engine.loop;
+package engine.window;
 
 import engine.Engine;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL11;
 
 /**
  * Created by KitK4t on 2018-12-16.
@@ -82,8 +83,7 @@ public class Loop {
     }
 
     /**Start the engine. Should store a running variable and set it.
-     * Start the loop.
-     * @param engine Engine to link the loop with.*/
+     * Start the loop.*/
     public void start(){
         if(!isRunning()) {
             this.running = true;
@@ -102,13 +102,13 @@ public class Loop {
                 initialTime = currentTime;
 
                 if (deltaU >= 1) {
-
                     engine.update();
                     setUps(getUps()+1);
                     deltaU--;
                 }
 
                 if (deltaF >= 1) {
+                    engine.getWindow().clearScreen();
                     engine.render();
                     GLFW.glfwSwapBuffers(getEngine().getWindow().getHandle());
                     setFps(getFps()+1);

@@ -2,18 +2,32 @@ package test;
 
 import engine.Engine;
 import engine.event.EventSystem;
+import engine.render.model.Mesh;
+import org.lwjgl.opengl.GL11;
 
 /**
  * Created by KitK4t on 2018-12-15.
  */
 public class TestEngine extends Engine{
 
+    private Mesh mesh;
+
     public TestEngine(String title, int width, int height, int maxFps, int maxUps) {
         super(title, width, height, maxFps, maxUps);
     }
 
     public void init() {
-
+        getWindow().setClearColor(0.2f,1,0.2f);
+        this.mesh = new Mesh(new float[]{
+                // Left bottom triangle
+                -0.5f, 0.5f, 0f,
+                -0.5f, -0.5f, 0f,
+                0.5f, -0.5f, 0f,
+                // Right top triangle
+                0.5f, -0.5f, 0f,
+                0.5f, 0.5f, 0f,
+                -0.5f, 0.5f, 0f
+        });
     }
 
     public void update() {
@@ -21,7 +35,7 @@ public class TestEngine extends Engine{
     }
 
     public void render() {
-
+        mesh.render(GL11.GL_TRIANGLES);
     }
 
     public void end() {

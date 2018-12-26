@@ -1,6 +1,7 @@
 package engine;
 
-import engine.loop.Loop;
+import engine.window.Loop;
+import engine.render.model.Mesh;
 import engine.util.Resource;
 import engine.util.ResourceManager;
 import engine.window.Window;
@@ -35,6 +36,7 @@ public abstract class Engine implements IEngine {
     public void cleanUp() {
         //TODO clear shader here.
         //TODO clear loader here. (VAOs, VBOs, textures, sounds)
+        Mesh.cleanUp();
     }
 
     /**Starts the engine. It runs the loop in the loop class.

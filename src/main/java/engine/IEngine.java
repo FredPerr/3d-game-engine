@@ -1,6 +1,6 @@
 package engine;
 
-import engine.loop.Loop;
+import engine.window.Loop;
 import engine.window.Window;
 
 /**
