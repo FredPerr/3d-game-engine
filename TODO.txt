@@ -1,1 +1,3 @@
 -   Thread for the engine with os start (with mac).
+
+-   Add geometry shader support.

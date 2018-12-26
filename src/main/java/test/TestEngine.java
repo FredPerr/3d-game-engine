@@ -10,15 +10,13 @@ import org.lwjgl.opengl.GL11;
  */
 public class TestEngine extends Engine{
 
-    private Mesh mesh;
-
     public TestEngine(String title, int width, int height, int maxFps, int maxUps) {
         super(title, width, height, maxFps, maxUps);
     }
 
     public void init() {
         getWindow().setClearColor(0.2f,1,0.2f);
-        this.mesh = new Mesh(new float[]{
+        Mesh mesh = new Mesh(new float[]{
                 -0.5f, 0.5f, 0f,//v0
                 -0.5f, -0.5f, 0f,//v1
                 0.5f, -0.5f, 0f,//v2
@@ -26,11 +24,8 @@ public class TestEngine extends Engine{
         }, new int[]{
                 0,1,3,//top left triangle (v0, v1, v3)
                 3,1,2//bottom right triangle (v3, v1, v2)
-        });
-    }
-
-    public void render() {
-        mesh.render(GL11.GL_TRIANGLES);
+        }, GL11.GL_TRIANGLES);
+        getDefaultRenderer().addEntity(mesh);
     }
 
     public void end() {}

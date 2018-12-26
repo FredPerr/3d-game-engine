@@ -37,6 +37,8 @@ public class Mesh {
     /**Number of the vertices in that mesh.
      * It is the same value of the number of the indices.*/
     private int vertexAmount;
+    /**The way to connect the vertices.*/
+    private int renderMode;
 
     /**
      * Creates a VAO and stores the positions' data of the vertices
@@ -48,10 +50,15 @@ public class Mesh {
      * @param indices The order to use the vertices and to connect them.
      *                The first index match the index of the vertex
      *                instantiation.
+     * @param renderMode The mode to render the mesh (GL11.xx) -> TRIANGLES, POINTS,
+     *                   LINES, ... See the link for more details: <a href=
+     *                   "https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glBegin.xml">
+     *                   Begin modes<a/>
      */
-    public Mesh(float[] vertices, int[] indices) {
+    public Mesh(float[] vertices, int[] indices, int renderMode) {
         this.vaoId = createVAO();
         this.vertexAmount = indices.length;
+        this.renderMode = renderMode;
         bindIndicesBuffer(indices);
         storeDataInAttributeList(0, vertices);
         unbindVAO();
@@ -111,7 +118,7 @@ public class Mesh {
      * This is also why we don't unbind the index buffer, as that would unbind
      * it from the VAO.
      *
-     * @param indices
+     * @param indices Order to connect the vertices.
      */
     private void bindIndicesBuffer(int[] indices) {
         int vboId = GL15.glGenBuffers();
@@ -133,14 +140,8 @@ public class Mesh {
      * to render.
      *
      * After rendering we unbind the VAO and disable the attribute.
-     *
-     * @param renderMode
-     *            The mode to render the mesh (GL11.xx) -> TRIANGLES, POINTS,
-     *            LINES, ... See the link for more details: <a href=
-     *            "https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glBegin.xml">
-     *            Begin modes<a/>
      */
-    public void render(int renderMode){
+    public void render(){
         bindVAO();
         GL20.glEnableVertexAttribArray(0);
         GL11.glDrawElements(renderMode, getVertexAmount(), GL11.GL_UNSIGNED_INT, 0);
@@ -162,6 +163,11 @@ public class Mesh {
      */
     public int getVertexAmount() {
         return this.vertexAmount;
+    }
+
+    /**@return Mode of to connect the vertices.*/
+    public int getRenderMode(){
+        return this.renderMode;
     }
 
     /**

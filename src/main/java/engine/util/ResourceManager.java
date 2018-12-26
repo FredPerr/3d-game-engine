@@ -32,6 +32,23 @@ public class ResourceManager {
         return null;
     }
 
+    /**Loads the content of a file as a text. It can be used to load the content of a resource.
+     * @param file Path of the file to load the content from.
+     * @return Content of the resource file.*/
+    public static String getFileSource(String file){
+        StringBuilder source = new StringBuilder();
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while((line = reader.readLine())!=null)
+                source.append(line).append("\n");//TODO might need // before \n
+            reader.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        return source.toString();
+    }
+
     /**
      * This method is static and can be access from everywhere in the code (fully independent).
      *

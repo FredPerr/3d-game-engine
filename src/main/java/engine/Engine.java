@@ -1,16 +1,22 @@
 package engine;
 
+import engine.render.Renderer;
+import engine.render.shader.DefaultShader;
 import engine.window.Loop;
 import engine.render.model.Mesh;
 import engine.util.Resource;
 import engine.util.ResourceManager;
 import engine.window.Window;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by KitK4t on 2018-12-16.
  */
 public abstract class Engine implements IEngine {
 
+    private List<Renderer> renderers;
     private ResourceManager resourceManager;
     private Resource resourceEngineIcon;
     private Window window;
@@ -26,6 +32,8 @@ public abstract class Engine implements IEngine {
         this.resourceManager = new ResourceManager();
         this.resourceEngineIcon = new Resource(ResourceManager.getApplicationFolderPath()+"/assets/textures/LWJGLEngine.png");
         this.window = new Window(this, title, width, height);
+        this.renderers = new ArrayList<>();
+        addRenderer(new Renderer(new DefaultShader("defaultshader.vs", "defaultshader.fs")));
         this.loop = new Loop(this, maxFps, maxUps);
 
         //Set the icon to the engine if the resource is valid.
@@ -33,10 +41,42 @@ public abstract class Engine implements IEngine {
             getWindow().setIcon(getResourceManager().loadImage(resourceEngineIcon.getFile().getPath()));
     }
 
+    /**Add a renderer to the engine.
+     * @param renderer Renderer to add.*/
+    public void addRenderer(Renderer renderer){
+        for(Renderer r : renderers)
+            if(r.getId() == renderer.getId())
+                return;
+        renderers.add(renderer);
+    }
+
+    /**Remove a renderer from the engine.
+     * @param renderer Renderer to add.
+     *                 The default renderer can't be removed.*/
+    public void removeRenderer(Renderer renderer){
+        if(renderer.getId() == 0)
+            return;
+        for(Renderer r : renderers)
+            if(r.getId() == renderer.getId())
+                renderers.remove(renderer);
+    }
+
+    /**Cleans up the shader, the loader and everything else that needs to be clean.*/
     public void cleanUp() {
-        //TODO clear shader here.
-        //TODO clear loader here. (VAOs, VBOs, textures, sounds)
+        for(Renderer r : renderers)
+            r.getShader().cleanUp();
         Mesh.cleanUp();
+        //TODO clear textures, sounds)
+    }
+
+    /**Render everything in the engine. Starts the shader, render, stop the shader
+     * and restart for each renderer.*/
+    public void render() {
+        for(Renderer r : renderers) {
+            r.getShader().start();
+            r.render();
+            r.getShader().stop();
+        }
     }
 
     /**Starts the engine. It runs the loop in the loop class.
@@ -46,15 +86,22 @@ public abstract class Engine implements IEngine {
         getLoop().start();
     }
 
+    /**@return The default renderer of the engine. This renderer can't be removed.*/
+    public Renderer getDefaultRenderer(){
+        return renderers.get(0);
+    }
+
     /**@return Resource manager of the engine.*/
     public ResourceManager getResourceManager(){
         return this.resourceManager;
     }
 
+    /**@return The window of the engine.*/
     public Window getWindow() {
         return this.window;
     }
 
+    /**@return The loop of the engine.*/
     public Loop getLoop(){
         return this.loop;
     }
