@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**A renderer is a class that can render entities to the screen with a certain shader.*/
 public abstract class Renderer {
@@ -76,5 +77,10 @@ public abstract class Renderer {
     /**@return ID of the renderer.*/
     public int getId(){
         return this.id;
+    }
+
+    /**@return List of all the entities of the renderer.*/
+    public List<Entity> getEntities(){
+        return this.entities;
     }
 }
