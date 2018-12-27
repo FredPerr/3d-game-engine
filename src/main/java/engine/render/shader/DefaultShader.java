@@ -13,7 +13,6 @@ public class DefaultShader extends ShaderProgram {
               new Resource(ResourceManager.getApplicationFolderPath()+"/assets/shaders/"+fragmentFileName));
     }
 
-    /**Define the attribute passed in parameters to the vertex shader input stream.*/
     protected void bindAttributes() {
         bindAttribute(0, "location");
         bindAttribute(1, "textureCoordinates");
@@ -21,5 +20,6 @@ public class DefaultShader extends ShaderProgram {
 
     protected void linkUniforms() {
         addUniformLocation("usesTexture");
+        addUniformLocation("matrixTransformation");
     }
 }

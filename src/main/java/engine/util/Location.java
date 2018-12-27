@@ -65,6 +65,16 @@ public class Location {
         this.z += z;
     }
 
+    /**Add the values for the 2 axis.
+     * @param x Amount to add in X.
+     * @param y Amount to add in Y.
+     * @param z Amount to add in Z.*/
+    public void add(float x, float y, float z){
+        addX(x);
+        addY(y);
+        addZ(z);
+    }
+
     /**@return X value of the location.*/
     public float getX(){
         return this.x;

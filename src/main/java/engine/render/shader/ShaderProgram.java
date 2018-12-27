@@ -152,8 +152,12 @@ public abstract class ShaderProgram {
      * @param location Location id of the uniform.
      * @param value Value of the uniform.*/
     public void loadUniformMatrix(int location, Matrix4f value){
-        value.set(matrixBuffer);
-        matrixBuffer.flip();
+        value.get(matrixBuffer);
         GL20.glUniformMatrix4fv(location, false, matrixBuffer);
+    }
+
+    /**ID of the shader program.*/
+    public int getProgramShaderId(){
+        return this.programShaderId;
     }
 }

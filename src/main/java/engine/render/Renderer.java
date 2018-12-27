@@ -1,8 +1,10 @@
 package engine.render;
 
-import engine.render.model.Mesh;
-import engine.render.model.TexturedMesh;
+import engine.render.model.Entity;
+import engine.render.shader.DefaultShader;
 import engine.render.shader.ShaderProgram;
+import engine.util.MathUtil;
+import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
@@ -16,7 +18,7 @@ public class Renderer {
     private static int nextId = 0;
 
     //TODO list of entities here.
-    private ArrayList<TexturedMesh> entities;
+    private ArrayList<Entity> entities;
 
     /**Shader of the renderer.*/
     private ShaderProgram shader;
@@ -34,7 +36,7 @@ public class Renderer {
 
     /**Renders everything with a given shader.*/
     public void render(){
-        for(TexturedMesh e : entities)
+        for(Entity e : entities)
             renderEntity(e);
     }
 
@@ -51,20 +53,22 @@ public class Renderer {
      *
      * After rendering we unbind the VAO and disable the attribute.
      */
-    public void renderEntity(TexturedMesh entity){
-        entity.getMesh().bindVAO();
+    public void renderEntity(Entity entity){
+        entity.getModel().getMesh().bindVAO();
         GL20.glEnableVertexAttribArray(0);
-        if(entity.getTexture() != null) {
-            getShader().loadUniformBoolean(getShader().getUniformLocations().get(0), entity.getMesh().isUsingTexture());
+        Matrix4f transformationMatrix = MathUtil.createTransformationMatrix(entity.getLocation(), entity.getRotation(), entity.getScale());
+        getShader().loadUniformMatrix(getShader().getUniformLocations().get(1), transformationMatrix);
+        if(entity.getModel().getTexture() != null) {
+            getShader().loadUniformBoolean(getShader().getUniformLocations().get(0), entity.getModel().getMesh().isUsingTexture());
             GL20.glEnableVertexAttribArray(1);
             GL13.glActiveTexture(GL13.GL_TEXTURE0);
-            GL13.glBindTexture(GL11.GL_TEXTURE_2D, entity.getTexture().getId());
+            GL13.glBindTexture(GL11.GL_TEXTURE_2D, entity.getModel().getTexture().getId());
         }
-        GL11.glDrawElements(entity.getMesh().getRenderMode(), entity.getMesh().getVertexAmount(), GL11.GL_UNSIGNED_INT, 0);
-        if(entity.getTexture() != null)
+         GL11.glDrawElements(entity.getModel().getMesh().getRenderMode(), entity.getModel().getMesh().getVertexAmount(), GL11.GL_UNSIGNED_INT, 0);
+        if(entity.getModel().getTexture() != null)
             GL20.glDisableVertexAttribArray(1);
         GL20.glDisableVertexAttribArray(0);
-        entity.getMesh().unbindVAO();
+        entity.getModel().getMesh().unbindVAO();
     }
 
     /**Set the shader of the renderer.
@@ -75,13 +79,13 @@ public class Renderer {
 
     /**Add an entity to the renderer.
      * @param entity Entity to add.*/
-    public void addEntity(TexturedMesh entity){
+    public void addEntity(Entity entity){
         this.entities.add(entity);
     }
 
     /**Add an entity to the renderer.
      * @param entity Entity to remove.*/
-    public void removeEntity(TexturedMesh entity){
+    public void removeEntity(Entity entity){
         this.entities.remove(entity);
     }
 

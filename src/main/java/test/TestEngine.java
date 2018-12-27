@@ -5,28 +5,30 @@ import engine.event.EventHandler;
 import engine.event.EventListener;
 import engine.event.EventSystem;
 import engine.event.event.window.EventKey;
+import engine.render.model.Entity;
 import engine.render.model.Mesh;
 import engine.render.model.Texture;
 import engine.render.model.TexturedMesh;
+import engine.util.Location;
 import engine.util.Resource;
 import engine.util.ResourceManager;
+import engine.util.Rotation;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
-
-import java.util.Scanner;
 
 /**
  * Created by KitK4t on 2018-12-15.
  */
 public class TestEngine extends Engine implements EventListener {
 
-    Mesh mesh;
+    Entity entity;
 
     public TestEngine(String title, int width, int height, int maxFps, int maxUps) {
         super(title, width, height, maxFps, maxUps);
     }
 
     public void init() {
+        getWindow().setClearColor(0.2f,1,0.2f);
 
         float[] textureCoordinates = new float[]{
                 0,0,
@@ -35,8 +37,8 @@ public class TestEngine extends Engine implements EventListener {
                 1,0
         };
 
-        getWindow().setClearColor(0.2f,1,0.2f);
-        mesh = new Mesh(new float[]{
+
+        Mesh mesh = new Mesh(new float[]{
                 -0.5f, 0.5f, 0f,//v0
                 -0.5f, -0.5f, 0f,//v1
                 0.5f, -0.5f, 0f,//v2
@@ -47,11 +49,14 @@ public class TestEngine extends Engine implements EventListener {
         }, textureCoordinates
                 , GL11.GL_TRIANGLES);
 
-        getDefaultRenderer().addEntity(
-                new TexturedMesh(mesh,
-                        new Texture(
-                                new Resource(ResourceManager.getApplicationFolderPath()+"/assets/textures/test.png"),
-                                GL11.GL_NEAREST)));
+        TexturedMesh model = new TexturedMesh(
+                mesh,
+                new Texture(new Resource(ResourceManager.getApplicationFolderPath()+"/assets/textures/test.png"),
+                GL11.GL_NEAREST));
+
+        entity = new Entity(model, new Location(0,0,0), new Rotation(), 1f);
+        getDefaultRenderer().addEntity(entity);
+
 
 
     }
@@ -62,7 +67,7 @@ public class TestEngine extends Engine implements EventListener {
     @EventHandler
     public void test(EventKey e){
         if(e.getKey() == GLFW.GLFW_KEY_SPACE && e.getAction() == GLFW.GLFW_RELEASE)
-            mesh.setUseTexture(!mesh.isUsingTexture());
+            entity.getModel().getMesh().setUseTexture(!entity.getModel().getMesh().isUsingTexture());
     }
 
     public static void main(String[] args){
