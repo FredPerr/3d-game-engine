@@ -1,5 +1,6 @@
 package engine;
 
+import engine.render.DefaultRenderer;
 import engine.render.Renderer;
 import engine.render.model.Texture;
 import engine.render.shader.DefaultShader;
@@ -37,7 +38,7 @@ public abstract class Engine implements IEngine {
         this.resourceEngineIcon = new Resource(ResourceManager.getApplicationFolderPath()+"/assets/textures/LWJGLEngine.png");
         this.window = new Window(this, title, width, height);
         this.renderers = new ArrayList<>();
-        addRenderer(new Renderer(new DefaultShader("defaultshader.vs", "defaultshader.fs")));
+        addRenderer(new DefaultRenderer(new DefaultShader("defaultshader.vs", "defaultshader.fs")));
         this.loop = new Loop(this, maxFps, maxUps);
 
         //Set the icon to the engine if the resource is valid.

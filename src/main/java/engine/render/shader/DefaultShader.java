@@ -21,5 +21,6 @@ public class DefaultShader extends ShaderProgram {
     protected void linkUniforms() {
         addUniformLocation("usesTexture");
         addUniformLocation("matrixTransformation");
+        addUniformLocation("matrixProjection");
     }
 }
