@@ -11,12 +11,11 @@ import org.lwjgl.opengl.GL20;
 import java.util.ArrayList;
 
 /**A renderer is a class that can render entities to the screen with a certain shader.*/
-public class Renderer {
+public abstract class Renderer {
 
     /**Id of the next renderer to be created.*/
     private static int nextId = 0;
 
-    //TODO list of entities here.
     private ArrayList<Entity> entities;
 
     /**Shader of the renderer.*/
@@ -34,13 +33,10 @@ public class Renderer {
     }
 
     /**Renders everything with a given shader.*/
-    public void render(){
-        for(Entity e : entities)
-            renderEntity(e);
-    }
+    public abstract void render();
 
     /**
-     * Renders a model to the screen.
+     * Renders an entity to the screen.
      *
      * Before we can render a VAO it needs to be made active, and we can do this
      * by binding it. We also need to enable the relevant attributes of the VAO,
@@ -52,23 +48,7 @@ public class Renderer {
      *
      * After rendering we unbind the VAO and disable the attribute.
      */
-    public void renderEntity(Entity entity){
-        entity.getModel().getMesh().bindVAO();
-        GL20.glEnableVertexAttribArray(0);
-        Matrix4f transformationMatrix = MathUtil.createTransformationMatrix(entity.getLocation(), entity.getRotation(), entity.getScale());
-        getShader().loadUniformMatrix(getShader().getUniformLocations().get(1), transformationMatrix);
-        if(entity.getModel().getTexture() != null) {
-            getShader().loadUniformBoolean(getShader().getUniformLocations().get(0), entity.getModel().getMesh().isUsingTexture());
-            GL20.glEnableVertexAttribArray(1);
-            GL13.glActiveTexture(GL13.GL_TEXTURE0);
-            GL13.glBindTexture(GL11.GL_TEXTURE_2D, entity.getModel().getTexture().getId());
-        }
-         GL11.glDrawElements(entity.getModel().getMesh().getRenderMode(), entity.getModel().getMesh().getVertexAmount(), GL11.GL_UNSIGNED_INT, 0);
-        if(entity.getModel().getTexture() != null)
-            GL20.glDisableVertexAttribArray(1);
-        GL20.glDisableVertexAttribArray(0);
-        entity.getModel().getMesh().unbindVAO();
-    }
+    public abstract void renderEntity(Entity entity);
 
     /**Set the shader of the renderer.
      * @param shader Shader to set.*/
