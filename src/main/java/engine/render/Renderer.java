@@ -1,7 +1,6 @@
 package engine.render;
 
 import engine.render.model.Entity;
-import engine.render.shader.DefaultShader;
 import engine.render.shader.ShaderProgram;
 import engine.util.MathUtil;
 import org.joml.Matrix4f;

@@ -3,8 +3,6 @@ package engine.render.model;
 import engine.util.Location;
 import engine.util.Rotation;
 
-import java.util.Locale;
-
 /**An entity is a dynamic object in the world.*/
 public class Entity {
 
