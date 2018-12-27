@@ -10,11 +10,9 @@ import org.lwjgl.opengl.GL20;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-/**A shader program is a GLSL way to pass begin with vertex and to end with
+/**A shader program is a OpenGL Shader Language way to pass begin with vertex and to end with
  * pixels by performing many actions to have lights, color and every other
  * 3D graphic effects.*/
 public abstract class ShaderProgram {

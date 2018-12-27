@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL20;
 
 import java.util.ArrayList;
 
-/**TODO comment here*/
+/**A renderer is a class that can render entities to the screen with a certain shader.*/
 public class Renderer {
 
     /**Id of the next renderer to be created.*/
@@ -81,7 +81,7 @@ public class Renderer {
 
     /**Add an entity to the renderer.
      * @param entity Entity to remove.*/
-    public void removeEntity(Mesh entity){
+    public void removeEntity(TexturedMesh entity){
         this.entities.remove(entity);
     }
 

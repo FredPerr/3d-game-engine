@@ -138,6 +138,13 @@ public class Mesh {
         GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
     }
 
+    /**Set the use texture value. If this value is true, the mesh will
+     * render the texture with it if the texture is not null.
+     * @param use True to use it.*/
+    public void setUseTexture(boolean use){
+        this.useTexture = use;
+    }
+
     /**
      * @return The ID of the VAO which link it to OpenGL and can access the
      * data about all the geometry of this model.

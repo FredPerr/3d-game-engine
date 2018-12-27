@@ -19,8 +19,6 @@ public class DefaultShader extends ShaderProgram {
         bindAttribute(1, "textureCoordinates");
     }
 
-
-
     protected void linkUniforms() {
         addUniformLocation("usesTexture");
     }
