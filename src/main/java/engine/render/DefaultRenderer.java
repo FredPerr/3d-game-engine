@@ -1,5 +1,6 @@
 package engine.render;
 
+import engine.Engine;
 import engine.render.model.Entity;
 import engine.render.shader.ShaderProgram;
 import engine.util.MathUtil;
@@ -13,8 +14,8 @@ import org.lwjgl.opengl.GL20;
  */
 public class DefaultRenderer extends Renderer {
 
-    public DefaultRenderer(ShaderProgram shader) {
-        super(shader);
+    public DefaultRenderer(Engine engine, ShaderProgram shader, Camera camera) {
+        super(engine, shader,camera);
     }
 
     public void render(){

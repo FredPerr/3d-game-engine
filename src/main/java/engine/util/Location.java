@@ -87,7 +87,7 @@ public class Location {
 
     /**@return Z value of the location.*/
     public float getZ(){
-        return this.y;
+        return this.z;
     }
 
     /**Get the distance between 2 3D locations.

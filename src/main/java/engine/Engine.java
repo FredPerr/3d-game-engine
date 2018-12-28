@@ -1,5 +1,8 @@
 package engine;
 
+import engine.event.EventSystem;
+import engine.event.listener.ListenerWindowResized;
+import engine.render.Camera;
 import engine.render.DefaultRenderer;
 import engine.render.Renderer;
 import engine.render.model.Texture;
@@ -38,7 +41,8 @@ public abstract class Engine implements IEngine {
         this.resourceEngineIcon = new Resource(ResourceManager.getApplicationFolderPath()+"/assets/textures/LWJGLEngine.png");
         this.window = new Window(this, title, width, height);
         this.renderers = new ArrayList<>();
-        addRenderer(new DefaultRenderer(new DefaultShader("defaultshader.vs", "defaultshader.fs")));
+        addRenderer(new DefaultRenderer(this, new DefaultShader("defaultshader.vs", "defaultshader.fs"), new Camera(90f,0.1f,1000f)));
+        EventSystem.addListener(new ListenerWindowResized(this));
         this.loop = new Loop(this, maxFps, maxUps);
 
         //Set the icon to the engine if the resource is valid.
@@ -113,5 +117,10 @@ public abstract class Engine implements IEngine {
     /**@return The loop of the engine.*/
     public Loop getLoop(){
         return this.loop;
+    }
+
+    /**@return All the renderers of the engine.*/
+    public List<Renderer> getRenderers(){
+        return this.renderers;
     }
 }

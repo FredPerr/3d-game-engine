@@ -55,6 +55,9 @@ public abstract class ShaderProgram {
     /**Loads and define the locations all the uniforms of the shader.*/
     protected abstract void linkUniforms();
 
+    /**Load the projection matrix.*/
+    public abstract void loadProjectionMatrix(Matrix4f matrix);
+
     /**Start using the shader. This method should be called every render.*/
     public void start(){
         GL20.glUseProgram(programShaderId);

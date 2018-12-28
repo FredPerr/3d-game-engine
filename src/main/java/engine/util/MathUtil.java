@@ -1,5 +1,7 @@
 package engine.util;
 
+import engine.render.Camera;
+import engine.render.DefaultRenderer;
 import org.joml.Matrix4f;
 
 import java.util.Random;
@@ -29,9 +31,7 @@ public class MathUtil {
         return v;
     }
 
-    private static boolean printed = false;
-
-    /**Creates a tranformation 4x4 matrix.
+    /**Creates a transformation 4x4 matrix.
      * @param movement Movement of the matrix.
      * @param rotation Rotation of the matrix.
      * @param scale Scale of the matrix.*/
@@ -44,5 +44,24 @@ public class MathUtil {
         .rotate((float)Math.toRadians(rotation.getZ()), 0,0,1)
         .scale(scale);
         return matrix;
+    }
+
+    /**Set a projection matrix 4x4.
+     * @param camera Camera to create the matrix from.
+     * @param windowHeight Current height of the window in pixels.
+     * @param windowWidth Current width of the window in pixels.*/
+    public static Matrix4f setProjectionMatrix(int windowWidth, int windowHeight, Camera camera){
+        float aspectRatio = (float) windowWidth/(float) windowHeight;
+        float yScale = (float) (1f / Math.tan((float)Math.toRadians(camera.getFov()/2f))) * aspectRatio;
+        float xScale = yScale / aspectRatio;
+        float frustumLength = camera.getRenderDistanceFar()-camera.getRenderDistanceNear();
+
+        return new Matrix4f()
+        .m00(xScale)
+        .m11(yScale)
+        .m22(-((camera.getRenderDistanceFar() + camera.getRenderDistanceNear()) / frustumLength))
+        .m23(-1)
+        .m32(-((2 * camera.getRenderDistanceNear() * camera.getRenderDistanceFar()) / frustumLength))
+        .m33(0);
     }
 }

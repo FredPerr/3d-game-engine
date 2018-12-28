@@ -1,5 +1,6 @@
 package engine.render;
 
+import engine.Engine;
 import engine.render.model.Entity;
 import engine.render.shader.ShaderProgram;
 import engine.util.MathUtil;
@@ -22,15 +23,27 @@ public abstract class Renderer {
     /**Shader of the renderer.*/
     private ShaderProgram shader;
 
+    private Matrix4f matrixProjection;
+
+    private Camera camera;
+
     /**ID of the renderer.*/
     private int id;
 
     /**Create a renderer for the engine.
-     * @param shader Shader of the renderer.*/
-    public Renderer(ShaderProgram shader){
+     * @param shader Shader of the renderer.
+     * @param camera Camera of the renderer.
+     * @param engine Current engine.*/
+    public Renderer(Engine engine, ShaderProgram shader, Camera camera){
         this.shader = shader;
         this.id = nextId++;
         this.entities = new ArrayList<>();
+        this.camera = camera;
+        this.matrixProjection = new Matrix4f();
+        updateMatrixProjection(engine.getWindow().getWidth(), engine.getWindow().getHeight());
+        getShader().start();
+        getShader().loadProjectionMatrix(matrixProjection);
+        getShader().stop();
     }
 
     /**Renders everything with a given shader.*/
@@ -82,5 +95,20 @@ public abstract class Renderer {
     /**@return List of all the entities of the renderer.*/
     public List<Entity> getEntities(){
         return this.entities;
+    }
+
+    /**@return Camera of the renderer.*/
+    public Camera getCamera(){
+        return this.camera;
+    }
+
+    /**Update the projection matrix.
+     * @param windowHeight Height of the window in pixels.
+     * @param windowWidth Width iof the window in pixels.*/
+    public void updateMatrixProjection(int windowWidth, int windowHeight){
+        matrixProjection = MathUtil.setProjectionMatrix(windowWidth, windowHeight, getCamera());
+        getShader().start();
+        getShader().loadProjectionMatrix(matrixProjection);
+        getShader().stop();
     }
 }

@@ -2,6 +2,7 @@ package engine.render.shader;
 
 import engine.util.Resource;
 import engine.util.ResourceManager;
+import org.joml.Matrix4f;
 
 public class DefaultShader extends ShaderProgram {
 
@@ -22,5 +23,9 @@ public class DefaultShader extends ShaderProgram {
         addUniformLocation("usesTexture");
         addUniformLocation("matrixTransformation");
         addUniformLocation("matrixProjection");
+    }
+
+    public void loadProjectionMatrix(Matrix4f matrix) {
+        loadUniformMatrix(getUniformLocations().get(2), matrix);
     }
 }
