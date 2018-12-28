@@ -19,7 +19,7 @@ public class DefaultRenderer extends Renderer {
     }
 
     public void render(){
-
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
         getShader().loadUniformMatrix(getShader().getUniformLocations().get(3), MathUtil.createViewMatrix(getEngine().getCamera()));
 
         for(Entity e : getEntities())

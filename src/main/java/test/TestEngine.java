@@ -35,23 +35,78 @@ public class TestEngine extends Engine implements EventListener {
                 0,0,
                 0,1,
                 1,1,
+                1,0,
+                0,0,
+                0,1,
+                1,1,
+                1,0,
+                0,0,
+                0,1,
+                1,1,
+                1,0,
+                0,0,
+                0,1,
+                1,1,
+                1,0,
+                0,0,
+                0,1,
+                1,1,
+                1,0,
+                0,0,
+                0,1,
+                1,1,
                 1,0
         };
 
         Mesh mesh = new Mesh(new float[]{
-                -0.5f, 0.5f, 0f,//v0
-                -0.5f, -0.5f, 0f,//v1
-                0.5f, -0.5f, 0f,//v2
-                0.5f, 0.5f, 0f,//v3
+                -0.5f,0.5f,-0.5f,
+                -0.5f,-0.5f,-0.5f,
+                0.5f,-0.5f,-0.5f,
+                0.5f,0.5f,-0.5f,
+
+                -0.5f,0.5f,0.5f,
+                -0.5f,-0.5f,0.5f,
+                0.5f,-0.5f,0.5f,
+                0.5f,0.5f,0.5f,
+
+                0.5f,0.5f,-0.5f,
+                0.5f,-0.5f,-0.5f,
+                0.5f,-0.5f,0.5f,
+                0.5f,0.5f,0.5f,
+
+                -0.5f,0.5f,-0.5f,
+                -0.5f,-0.5f,-0.5f,
+                -0.5f,-0.5f,0.5f,
+                -0.5f,0.5f,0.5f,
+
+                -0.5f,0.5f,0.5f,
+                -0.5f,0.5f,-0.5f,
+                0.5f,0.5f,-0.5f,
+                0.5f,0.5f,0.5f,
+
+                -0.5f,-0.5f,0.5f,
+                -0.5f,-0.5f,-0.5f,
+                0.5f,-0.5f,-0.5f,
+                0.5f,-0.5f,0.5f
         }, new int[]{
-                0,1,3,//top left triangle (v0, v1, v3)
-                3,1,2//bottom right triangle (v3, v1, v2)
+                0,1,3,
+                3,1,2,
+                4,5,7,
+                7,5,6,
+                8,9,11,
+                11,9,10,
+                12,13,15,
+                15,13,14,
+                16,17,19,
+                19,17,18,
+                20,21,23,
+                23,21,22
         }, textureCoordinates
                 , GL11.GL_TRIANGLES);
 
         TexturedMesh model = new TexturedMesh(
                 mesh,
-                new Texture(new Resource(ResourceManager.getApplicationFolderPath()+"/assets/textures/test.png"),
+                new Texture(new Resource(ResourceManager.getApplicationFolderPath()+"/assets/textures/LWJGLEngine.png"),
                 GL11.GL_NEAREST));
 
         entity = new Entity(model, new Location(0,0,-4), new Rotation(), 1f);
@@ -64,20 +119,27 @@ public class TestEngine extends Engine implements EventListener {
     @EventHandler
     public void onKeyTest(EventKey e){
 
+        if(!getWindow().isMouseGrabbed()) return;
+
         if(e.getKey() == GLFW.GLFW_KEY_W && e.getAction() != GLFW.GLFW_RELEASE)
-            getCamera().getLocation().addZ(-0.2f);
+            getCamera().goForward(0.2f, false);
 
 
         if(e.getKey() == GLFW.GLFW_KEY_S && e.getAction() != GLFW.GLFW_RELEASE)
-            getCamera().getLocation().addZ(0.2f);
+            getCamera().goBackward(0.2f, false);
 
         if(e.getKey() == GLFW.GLFW_KEY_A && e.getAction() != GLFW.GLFW_RELEASE)
-            getCamera().getLocation().addX(-0.2f);
+            getCamera().goLeftward(0.2f);
 
 
         if(e.getKey() == GLFW.GLFW_KEY_D && e.getAction() != GLFW.GLFW_RELEASE)
-            getCamera().getLocation().addX(0.2f);
+            getCamera().goRightward(0.2f);
 
+        if(e.getKey() == GLFW.GLFW_KEY_LEFT_SHIFT && e.getAction() != GLFW.GLFW_RELEASE)
+            getCamera().goDownward(0.2f);
+
+        if(e.getKey() == GLFW.GLFW_KEY_SPACE && e.getAction() != GLFW.GLFW_RELEASE)
+            getCamera().goUpward(0.2f);
     }
 
     public static void main(String[] args){

@@ -3,6 +3,7 @@ package test;
 import engine.event.EventHandler;
 import engine.event.EventListener;
 import engine.event.event.window.*;
+import org.lwjgl.glfw.GLFW;
 
 /**
  * Created by KitK4t on 2018-12-16.
@@ -17,17 +18,22 @@ public class ListenerTest implements EventListener {
 
     @EventHandler
     public void onTestKey(EventKey e){
+        if(engine.getWindow().isMouseGrabbed() && e.getKey() == GLFW.GLFW_KEY_ESCAPE && e.getAction() == GLFW.GLFW_RELEASE)
+            engine.getWindow().setMouseGrabbed(false);
     }
 
     @EventHandler
     public void onTestMouse(EventMouseButton e){
+        if(!engine.getWindow().isMouseGrabbed() && e.getAction() == GLFW.GLFW_RELEASE){
+            engine.getWindow().setMouseGrabbed(true);
+        }
     }
 
     @EventHandler
     public void onTestMousePos(EventMouseMovement e){
         if(engine.getWindow().isMouseGrabbed()){
             float addX = (e.getToX()-e.getFromX()) * engine.getCamera().getSensitivity();
-            float addY = (e.getToX()-e.getFromX()) * engine.getCamera().getSensitivity();
+            float addY = (e.getToY()-e.getFromY()) * engine.getCamera().getSensitivity();
             engine.getCamera().rotate(0,addX,addY);
         }
     }
