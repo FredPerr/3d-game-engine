@@ -1,15 +1,15 @@
 package engine.event.event.render;
 
 /**
- * Created by KitK4t on 2018-12-27.
- *
- * The camera setting enum class provides the list of the possible
+ * The <strong>camera settings</strong> enum class provides the list of the possible
  * modifications of an {@link engine.render.Camera} object.
  * An enum should be returned to get the type of the
  * modification in the {@link engine.render.Camera} object
  * that have been performed. Each of these enum are called on a
  * {@link engine.event.event.render.EventCameraSettingChange} event.
  * event. They are all indicated when they should be used.
+ *
+ * Created by KitK4t on 2018-12-27.
  */
 public enum CameraSettings {
 
