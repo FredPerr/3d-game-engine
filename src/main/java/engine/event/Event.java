@@ -1,13 +1,19 @@
 package engine.event;
 
 import java.util.ArrayList;
+
 /**
  * The <strong>Event</strong> abstract class is a part of
  * the event system. It stores all the created event which
  * can be created by creating a class extended by the
  * {@link engine.event.Event} class and be instantiated
  * before the loop of the engine starts. The event needs
- * to be in a class otherwise, it will not be stored.
+ * to be in a class otherwise, it will not be stored. Each
+ * class that inherit this class should have the variables
+ * that are edited, a {@code setValues(...)} method with
+ * the variables edited in parameter to redefine them
+ * before every call of the event. They should have
+ * getters to get the variables edited.
  *
  * Created by KitK4t on 2018-12-16.
  */
@@ -32,7 +38,7 @@ public abstract class Event {
      * this event into it by its class name.
      * @return True if the event is stored (if it exists).
      * Otherwise, it returns false.*/
-    private boolean exists(){
+    protected boolean exists(){
         for(Event e : events)
             if(e.getClass().getName().equals(this.getClass().getName()))
                 return true;

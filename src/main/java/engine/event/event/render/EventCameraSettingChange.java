@@ -4,28 +4,36 @@ import engine.event.Event;
 import engine.render.Camera;
 
 /**
- * Created by KitK4t on 2018-12-27.
+ * This event is called when the a camera setting changes.
+ * These possible settings are in the enum class
+ * {@link engine.event.event.render.CameraSettings}. The
+ * {@link engine.render.Camera} object and the
+ * {@link engine.event.event.render.CameraSettings} edited
+ * are accessible.
  *
- * This event is called when the field of view of a camera changes.
+ * Created by KitK4t on 2018-12-27.
  */
 public class EventCameraSettingChange extends Event{
 
-    private CameraSettings currentSetting;
+    /**The current setting edited.*/
+    private CameraSettings editedSetting;
+    /**The camera that had a value edited.*/
     private Camera camera;
 
-    /**@param setting Setting currently changing.*/
-    public void setValues(Camera camera, CameraSettings setting){
+    /**@param camera Camera that a value has been edited.
+     * @param editedSetting The setting that have been edited in the camera.*/
+    public void setValues(Camera camera, CameraSettings editedSetting){
         this.camera = camera;
-        this.currentSetting = setting;
+        this.editedSetting = editedSetting;
     }
 
-    /**@return Camera that the fov changed.*/
+    /**@return Camera that a value has been changed.*/
     public Camera getCamera() {
-        return camera;
+        return this.camera;
     }
 
-    /**@return Setting that had been changed.*/
-    public CameraSettings getChangedSetting(){
-        return this.currentSetting;
+    /**@return Setting that had been edited in the camera.*/
+    public CameraSettings getEditedSetting(){
+        return this.editedSetting;
     }
 }
