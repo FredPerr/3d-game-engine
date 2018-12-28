@@ -1,8 +1,6 @@
 package engine.event;
 
-import engine.event.event.render.EventFovChange;
-import engine.event.event.render.EventRenderDistanceFar;
-import engine.event.event.render.EventRenderDistanceNear;
+import engine.event.event.render.EventCameraSettingChange;
 
 /**
  * Created by KitK4t on 2018-12-27.
@@ -11,7 +9,4 @@ import engine.event.event.render.EventRenderDistanceNear;
  */
 public class DefaultEvents {
 
-    public static EventFovChange fovChange = new EventFovChange();
-    public static EventRenderDistanceFar renderDistanceFar = new EventRenderDistanceFar();
-    public static EventRenderDistanceNear renderDistanceNear = new EventRenderDistanceNear();
-}
+    public static EventCameraSettingChange eventCameraSettingChange = new EventCameraSettingChange();}

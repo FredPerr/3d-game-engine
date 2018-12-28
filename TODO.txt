@@ -1,3 +1,5 @@
 -   Thread for the engine with os start (with mac).
 
 -   Add geometry shader support.
+
+-   Clean delay input system.

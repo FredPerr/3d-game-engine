@@ -14,11 +14,14 @@ import org.lwjgl.opengl.GL20;
  */
 public class DefaultRenderer extends Renderer {
 
-    public DefaultRenderer(Engine engine, ShaderProgram shader, Camera camera) {
-        super(engine, shader,camera);
+    public DefaultRenderer(Engine engine, ShaderProgram shader) {
+        super(engine, shader);
     }
 
     public void render(){
+
+        getShader().loadUniformMatrix(getShader().getUniformLocations().get(3), MathUtil.createViewMatrix(getEngine().getCamera()));
+
         for(Entity e : getEntities())
             renderEntity(e);
     }

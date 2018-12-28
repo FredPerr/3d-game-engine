@@ -5,6 +5,7 @@ import engine.event.EventHandler;
 import engine.event.EventListener;
 import engine.event.EventSystem;
 import engine.event.event.window.EventKey;
+import engine.render.Camera;
 import engine.render.model.Entity;
 import engine.render.model.Mesh;
 import engine.render.model.Texture;
@@ -61,29 +62,27 @@ public class TestEngine extends Engine implements EventListener {
     public void update() {}
 
     @EventHandler
-    public void test(EventKey e){
-        if(e.getKey() == GLFW.GLFW_KEY_SPACE && e.getAction() == GLFW.GLFW_RELEASE)
-            entity.getModel().getMesh().setUseTexture(!entity.getModel().getMesh().isUsingTexture());
+    public void onKeyTest(EventKey e){
 
         if(e.getKey() == GLFW.GLFW_KEY_W && e.getAction() != GLFW.GLFW_RELEASE)
-            entity.getLocation().addZ(-0.2f);
+            getCamera().getLocation().addZ(-0.2f);
 
 
         if(e.getKey() == GLFW.GLFW_KEY_S && e.getAction() != GLFW.GLFW_RELEASE)
-            entity.getLocation().addZ(0.2f);
+            getCamera().getLocation().addZ(0.2f);
 
         if(e.getKey() == GLFW.GLFW_KEY_A && e.getAction() != GLFW.GLFW_RELEASE)
-            entity.getLocation().addX(-0.2f);
+            getCamera().getLocation().addX(-0.2f);
 
 
         if(e.getKey() == GLFW.GLFW_KEY_D && e.getAction() != GLFW.GLFW_RELEASE)
-            entity.getLocation().addX(0.2f);
+            getCamera().getLocation().addX(0.2f);
 
     }
 
     public static void main(String[] args){
         TestEngine engine = new TestEngine("Test engine", 720, 480, 60,30);
-        EventSystem.addListener(new ListenerTest());
+        EventSystem.addListener(new ListenerTest(engine));
         EventSystem.addListener(engine);
         engine.start();
     }

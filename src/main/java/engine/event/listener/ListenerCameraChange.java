@@ -4,9 +4,7 @@ import engine.Engine;
 import engine.event.EventHandler;
 import engine.event.EventListener;
 import engine.event.EventPriority;
-import engine.event.event.render.EventFovChange;
-import engine.event.event.render.EventRenderDistanceFar;
-import engine.event.event.render.EventRenderDistanceNear;
+import engine.event.event.render.EventCameraSettingChange;
 import engine.render.Renderer;
 
 /**
@@ -21,22 +19,9 @@ public class ListenerCameraChange implements EventListener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onFovChange(EventFovChange e){
-        updateMatrices();
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onRenderDistanceFarChange(EventRenderDistanceFar e){
-        updateMatrices();
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onRenderDistanceNearChange(EventRenderDistanceNear e){
-        updateMatrices();
-    }
-
-    private void updateMatrices(){
+    public void onCameraSettingsChange(EventCameraSettingChange e){
         for(Renderer r : engine.getRenderers())
             r.updateMatrixProjection(engine.getWindow().getWidth(), engine.getWindow().getHeight());
+
     }
 }

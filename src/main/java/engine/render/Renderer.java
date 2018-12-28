@@ -18,6 +18,8 @@ public abstract class Renderer {
     /**Id of the next renderer to be created.*/
     private static int nextId = 0;
 
+    private Engine engine;
+
     private ArrayList<Entity> entities;
 
     /**Shader of the renderer.*/
@@ -25,25 +27,20 @@ public abstract class Renderer {
 
     private Matrix4f matrixProjection;
 
-    private Camera camera;
-
     /**ID of the renderer.*/
     private int id;
 
     /**Create a renderer for the engine.
      * @param shader Shader of the renderer.
-     * @param camera Camera of the renderer.
+     * @param engine Camera of the renderer.
      * @param engine Current engine.*/
-    public Renderer(Engine engine, ShaderProgram shader, Camera camera){
+    public Renderer(Engine engine, ShaderProgram shader){
+        this.engine = engine;
         this.shader = shader;
         this.id = nextId++;
         this.entities = new ArrayList<>();
-        this.camera = camera;
         this.matrixProjection = new Matrix4f();
         updateMatrixProjection(engine.getWindow().getWidth(), engine.getWindow().getHeight());
-        getShader().start();
-        getShader().loadProjectionMatrix(matrixProjection);
-        getShader().stop();
     }
 
     /**Renders everything with a given shader.*/
@@ -97,18 +94,18 @@ public abstract class Renderer {
         return this.entities;
     }
 
-    /**@return Camera of the renderer.*/
-    public Camera getCamera(){
-        return this.camera;
-    }
-
     /**Update the projection matrix.
      * @param windowHeight Height of the window in pixels.
      * @param windowWidth Width iof the window in pixels.*/
     public void updateMatrixProjection(int windowWidth, int windowHeight){
-        matrixProjection = MathUtil.setProjectionMatrix(windowWidth, windowHeight, getCamera());
+        matrixProjection = MathUtil.setProjectionMatrix(windowWidth, windowHeight, engine.getCamera());
         getShader().start();
         getShader().loadProjectionMatrix(matrixProjection);
         getShader().stop();
+    }
+
+    /**@return Current engine.*/
+    public Engine getEngine(){
+        return this.engine;
     }
 }

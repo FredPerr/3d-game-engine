@@ -2,43 +2,46 @@ package test;
 
 import engine.event.EventHandler;
 import engine.event.EventListener;
-import engine.event.EventSystem;
 import engine.event.event.window.*;
-import engine.window.Window;
 
 /**
  * Created by KitK4t on 2018-12-16.
  */
 public class ListenerTest implements EventListener {
 
+    private TestEngine engine;
+
+    public ListenerTest(TestEngine engine){
+        this.engine = engine;
+    }
+
     @EventHandler
     public void onTestKey(EventKey e){
-        //System.out.println("Key press: "+e.getKey() + " " + e.getAction());
     }
 
     @EventHandler
     public void onTestMouse(EventMouseButton e){
-        //System.out.println("Mouse press: "+e.getButton() + " " + e.getAction());
     }
 
     @EventHandler
     public void onTestMousePos(EventMouseMovement e){
-        //System.out.println("Mouse move: "+ e.getFromX() + " to " + e.getToX());
+        if(engine.getWindow().isMouseGrabbed()){
+            float addX = (e.getToX()-e.getFromX()) * engine.getCamera().getSensitivity();
+            float addY = (e.getToX()-e.getFromX()) * engine.getCamera().getSensitivity();
+            engine.getCamera().rotate(0,addX,addY);
+        }
     }
 
     @EventHandler
     public void onTestMouseScroll(EventMouseScroll e){
-        //System.out.println("Mouse move: "+ e.getAddX() + " & " + e.getAddY());
     }
 
     @EventHandler
     public void onTestMouseEnter(EventMouseEnter e){
-        //System.out.println("Mouse enter: "+ e.isEntered());
     }
 
     @EventHandler
     public void onTestWindowIconify(EventWindowIconify e){
-        //System.out.println("Window iconified: "+ e.isIconified());
     }
 
     @EventHandler

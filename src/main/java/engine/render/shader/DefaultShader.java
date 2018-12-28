@@ -20,9 +20,10 @@ public class DefaultShader extends ShaderProgram {
     }
 
     protected void linkUniforms() {
-        addUniformLocation("usesTexture");
-        addUniformLocation("matrixTransformation");
-        addUniformLocation("matrixProjection");
+        addUniformLocation("usesTexture");//0
+        addUniformLocation("matrixTransformation");//1
+        addUniformLocation("matrixProjection");//2
+        addUniformLocation("matrixView");//3
     }
 
     public void loadProjectionMatrix(Matrix4f matrix) {

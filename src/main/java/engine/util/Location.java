@@ -29,6 +29,13 @@ public class Location {
         this.z = z;
     }
 
+    /**Set the values to their negative (if already negative it comes positive.)*/
+    public void negate(){
+        setX(-getX());
+        setY(-getY());
+        setZ(-getZ());
+    }
+
     /**Set the x value of the location.
      * @param x Value of the x coordinate.*/
     public void setX(float x){

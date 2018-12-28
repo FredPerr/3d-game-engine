@@ -64,4 +64,16 @@ public class MathUtil {
         .m32(-((2 * camera.getRenderDistanceNear() * camera.getRenderDistanceFar()) / frustumLength))
         .m33(0);
     }
+
+    /**Create a view matrix.
+     * @param camera Camera to create the view matrix from.*/
+    public static Matrix4f createViewMatrix(Camera camera){
+        Matrix4f matrix = new Matrix4f();
+        matrix.identity();
+        matrix.rotate((float) Math.toRadians(camera.getRotation().getPitch()), 1,0,0);
+        matrix.rotate((float) Math.toRadians(camera.getRotation().getYaw()), 0,1,0);
+        matrix.rotate((float) Math.toRadians(camera.getRotation().getRoll()), 0,0,1);
+        matrix.translate(-camera.getLocation().getX(), -camera.getLocation().getY(),-camera.getLocation().getZ());
+        return matrix;
+    }
 }

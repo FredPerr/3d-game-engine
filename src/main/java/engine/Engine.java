@@ -8,11 +8,9 @@ import engine.render.DefaultRenderer;
 import engine.render.Renderer;
 import engine.render.model.Texture;
 import engine.render.shader.DefaultShader;
-import engine.util.Image;
+import engine.util.*;
 import engine.window.Loop;
 import engine.render.model.Mesh;
-import engine.util.Resource;
-import engine.util.ResourceManager;
 import engine.window.Window;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
@@ -26,6 +24,7 @@ import java.util.List;
 public abstract class Engine implements IEngine {
 
     private List<Renderer> renderers;
+    private Camera camera;
     private ResourceManager resourceManager;
     private Resource resourceEngineIcon;
     private Window window;
@@ -41,8 +40,9 @@ public abstract class Engine implements IEngine {
         this.resourceManager = new ResourceManager();
         this.resourceEngineIcon = new Resource(ResourceManager.getApplicationFolderPath()+"/assets/textures/LWJGLEngine.png");
         this.window = new Window(this, title, width, height);
+        this.camera = new Camera(new Location(), new Rotation(),90, 0.1f, 1000, true, 0.2f,90, -90);
         this.renderers = new ArrayList<>();
-        addRenderer(new DefaultRenderer(this, new DefaultShader("defaultshader.vs", "defaultshader.fs"), new Camera(90f,0.1f,1000f)));
+        addRenderer(new DefaultRenderer(this, new DefaultShader("defaultshader.vs", "defaultshader.fs")));
         EventSystem.addListener(new ListenerWindowResized(this));
         EventSystem.addListener(new ListenerCameraChange(this));
         this.loop = new Loop(this, maxFps, maxUps);
@@ -124,5 +124,10 @@ public abstract class Engine implements IEngine {
     /**@return All the renderers of the engine.*/
     public List<Renderer> getRenderers(){
         return this.renderers;
+    }
+
+    /**@return Camera of the renderer.*/
+    public Camera getCamera(){
+        return this.camera;
     }
 }
