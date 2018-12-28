@@ -53,7 +53,7 @@ public class TestEngine extends Engine implements EventListener {
                 new Texture(new Resource(ResourceManager.getApplicationFolderPath()+"/assets/textures/test.png"),
                 GL11.GL_NEAREST));
 
-        entity = new Entity(model, new Location(0,0,-0.2f), new Rotation(), 1f);
+        entity = new Entity(model, new Location(0,0,-4), new Rotation(), 1f);
         getDefaultRenderer().addEntity(entity);
     }
 
@@ -65,11 +65,11 @@ public class TestEngine extends Engine implements EventListener {
         if(e.getKey() == GLFW.GLFW_KEY_SPACE && e.getAction() == GLFW.GLFW_RELEASE)
             entity.getModel().getMesh().setUseTexture(!entity.getModel().getMesh().isUsingTexture());
 
-        if(e.getKey() == GLFW.GLFW_KEY_S && e.getAction() != GLFW.GLFW_RELEASE)
+        if(e.getKey() == GLFW.GLFW_KEY_W && e.getAction() != GLFW.GLFW_RELEASE)
             entity.getLocation().addZ(-0.2f);
 
 
-        if(e.getKey() == GLFW.GLFW_KEY_W && e.getAction() != GLFW.GLFW_RELEASE)
+        if(e.getKey() == GLFW.GLFW_KEY_S && e.getAction() != GLFW.GLFW_RELEASE)
             entity.getLocation().addZ(0.2f);
 
         if(e.getKey() == GLFW.GLFW_KEY_A && e.getAction() != GLFW.GLFW_RELEASE)

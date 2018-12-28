@@ -1,6 +1,7 @@
 package engine;
 
 import engine.event.EventSystem;
+import engine.event.listener.ListenerCameraChange;
 import engine.event.listener.ListenerWindowResized;
 import engine.render.Camera;
 import engine.render.DefaultRenderer;
@@ -43,6 +44,7 @@ public abstract class Engine implements IEngine {
         this.renderers = new ArrayList<>();
         addRenderer(new DefaultRenderer(this, new DefaultShader("defaultshader.vs", "defaultshader.fs"), new Camera(90f,0.1f,1000f)));
         EventSystem.addListener(new ListenerWindowResized(this));
+        EventSystem.addListener(new ListenerCameraChange(this));
         this.loop = new Loop(this, maxFps, maxUps);
 
         //Set the icon to the engine if the resource is valid.

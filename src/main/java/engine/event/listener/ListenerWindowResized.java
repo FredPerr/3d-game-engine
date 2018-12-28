@@ -26,8 +26,7 @@ public class ListenerWindowResized implements EventListener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onWindowResized(EventWindowResize e){
         GL11.glViewport(0,0,e.getWidth(), e.getHeight());
-        //This code seem useless.
-        //for(Renderer r : engine.getRenderers())
-        //    r.updateMatrixProjection(e.getWidth(), e.getHeight());
+        for(Renderer r : engine.getRenderers())
+            r.updateMatrixProjection(e.getWidth(), e.getHeight());
     }
 }

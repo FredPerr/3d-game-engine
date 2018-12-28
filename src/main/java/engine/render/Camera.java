@@ -1,5 +1,8 @@
 package engine.render;
 
+import engine.event.DefaultEvents;
+import engine.event.EventSystem;
+
 /**
  * Created by KitK4t on 2018-12-27.
  *
@@ -28,6 +31,8 @@ public class Camera {
      * @param fov Filed of view angle on 360.*/
     public void setFov(float fov) {
         //TODO add event here to catch change fov to refresh the matrix projection.
+        DefaultEvents.fovChange.setValues(this, getFov(), fov);
+        EventSystem.callEvent(DefaultEvents.fovChange);
         this.fov = fov;
     }
 
@@ -39,6 +44,8 @@ public class Camera {
     /**Set the render near distance.
      * @param renderDistanceNear Distance from the camera that starts to render.*/
     public void setRenderDistanceNear(float renderDistanceNear) {
+        DefaultEvents.renderDistanceNear.setValues(getRenderDistanceNear(), renderDistanceNear);
+        EventSystem.callEvent(DefaultEvents.renderDistanceNear);
         this.renderDistanceNear = renderDistanceNear;
     }
 
@@ -50,6 +57,8 @@ public class Camera {
     /**Set the render far distance.
      * @param renderDistanceFar Distance from the camera that stops to render.*/
     public void setRenderDistanceFar(float renderDistanceFar) {
+        DefaultEvents.renderDistanceFar.setValues(getRenderDistanceFar(), renderDistanceFar);
+        EventSystem.callEvent(DefaultEvents.renderDistanceFar);
         this.renderDistanceFar = renderDistanceFar;
     }
 }
