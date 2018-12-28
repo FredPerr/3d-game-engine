@@ -3,14 +3,20 @@ package engine.event.event.window;
 import engine.event.Event;
 
 /**
- * Created by KitK4t on 2018-12-16.
+ * This event is called when the window is resized.
+ * It collects the last and the new dimension of the window in pixels.
  *
- * Called when the window is resized.
+ * Created by KitK4t on 2018-12-16.
  */
 public class EventWindowResize extends Event{
 
+    /**Last and nwe dimensions of the window.*/
     private int width, height, lastWidth, lastHeight;
 
+    /**@param height New height of the window in pixels.
+     * @param lastHeight Old height of the window in pixels.
+     * @param lastWidth Old width of the window in pixels.
+     * @param width New width of the window in pixels.*/
     public void setValues(int width, int height, int lastHeight, int lastWidth){
         this.height = height;
         this.width = width;

@@ -3,10 +3,9 @@ package engine.event.event.window;
 import engine.event.Event;
 
 /**
- * Created by KitK4t on 2018-12-16.
+ * This event is called when the window try to close.
+ * It does not collect anything.
  *
- * Called when the window try to close.
+ * Created by KitK4t on 2018-12-16.
  */
-public class EventWindowTryClose extends Event{
-
-}
+public class EventWindowTryClose extends Event{}
