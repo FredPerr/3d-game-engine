@@ -6,7 +6,7 @@ package engine.event.event.render;
  * An enum should be returned to get the type of the
  * modification in the {@link engine.render.Camera} object
  * that have been performed. Each of these enum are called on a
- * {@link engine.event.event.render.EventCameraSettingChange} event.
+ * {@link EventCameraSettingChanged} event.
  * event. They are all indicated when they should be used.
  *
  * Created by KitK4t on 2018-12-27.

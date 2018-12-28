@@ -13,7 +13,7 @@ import engine.render.Camera;
  *
  * Created by KitK4t on 2018-12-27.
  */
-public class EventCameraSettingChange extends Event{
+public class EventCameraSettingChanged extends Event{
 
     /**The current setting edited.*/
     private CameraSettings editedSetting;

@@ -4,7 +4,7 @@ import engine.Engine;
 import engine.event.EventHandler;
 import engine.event.EventListener;
 import engine.event.EventPriority;
-import engine.event.event.render.EventCameraSettingChange;
+import engine.event.event.render.EventCameraSettingChanged;
 import engine.render.Renderer;
 
 /**
@@ -19,7 +19,7 @@ public class ListenerCameraChange implements EventListener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onCameraSettingsChange(EventCameraSettingChange e){
+    public void onCameraSettingsChange(EventCameraSettingChanged e){
         for(Renderer r : engine.getRenderers())
             r.updateMatrixProjection(engine.getWindow().getWidth(), engine.getWindow().getHeight());
 

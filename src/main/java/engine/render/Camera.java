@@ -51,8 +51,8 @@ public class Camera {
             if(rotation.getPitch()+addPitch > pitchMax) rotation.setPitch(pitchMax);
             if(rotation.getPitch()+addPitch < pitchMin) rotation.setPitch(pitchMin);
         }
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.ROTATION);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.ROTATION);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 
     /**Create a location to add to the current location of the camera to move.
@@ -71,8 +71,8 @@ public class Camera {
             getLocation().addY(-dy);
         }
         getLocation().add(dx, 0, -dz);
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.LOCATION);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.LOCATION);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 
     /**Create a location to add to the current location of the camera to move.
@@ -91,8 +91,8 @@ public class Camera {
             getLocation().addY(dy);
         }
         getLocation().add(-dx, 0, dz);
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.LOCATION);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.LOCATION);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 
     /**Create a location to add to the current location of the camera to move.
@@ -101,8 +101,8 @@ public class Camera {
         float dx = (float) (Math.sin(Math.toRadians(90-rotation.getYaw())) * distance);
         float dz = (float) (Math.cos(Math.toRadians(90-rotation.getYaw())) * distance);
         getLocation().add(-dx, 0, -dz);
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.LOCATION);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.LOCATION);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 
     /**Create a location to add to the current location of the camera to move.
@@ -111,24 +111,24 @@ public class Camera {
         float dx = (float) (Math.sin(Math.toRadians(90-rotation.getYaw())) * distance);
         float dz = (float) (Math.cos(Math.toRadians(90-rotation.getYaw())) * distance);
         getLocation().add(dx, 0, dz);
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.LOCATION);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.LOCATION);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 
     /**Create a location to add to the current location of the camera to move.
      * @param distance Distance from the last location.*/
     public void goUpward(float distance) {
         getLocation().add(0, distance, 0);
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.LOCATION);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.LOCATION);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 
     /**Create a location to add to the current location of the camera to move.
      * @param distance Distance from the last location.*/
     public void goDownward(float distance) {
         getLocation().add(0, -distance, 0);
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.LOCATION);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.LOCATION);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 
     /**@return Field of view angle of the camera.*/
@@ -140,8 +140,8 @@ public class Camera {
      * @param fov Filed of view angle on 360.*/
     public void setFov(float fov) {
         this.fov = fov;
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.FOV);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.FOV);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 
     /**@return Render distance from the camera that starts to render.*/
@@ -153,8 +153,8 @@ public class Camera {
      * @param renderDistanceNear Distance from the camera that starts to render.*/
     public void setRenderDistanceNear(float renderDistanceNear) {
         this.renderDistanceNear = renderDistanceNear;
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.RENDER_DISTANCE_NEAR);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.RENDER_DISTANCE_NEAR);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 
     /**@return Render distance from the camera that stops to render.*/
@@ -166,8 +166,8 @@ public class Camera {
      * @param renderDistanceFar Distance from the camera that stops to render.*/
     public void setRenderDistanceFar(float renderDistanceFar) {
         this.renderDistanceFar = renderDistanceFar;
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.RENDER_DISTANCE_FAR);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.RENDER_DISTANCE_FAR);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 
     /**@return location of the camera.*/
@@ -192,8 +192,8 @@ public class Camera {
      */
     public void setPitchMinMax(boolean pitchMinMax) {
         this.pitchMinMax = pitchMinMax;
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.LOCK_PITCH);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.LOCK_PITCH);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 
     /**
@@ -208,8 +208,8 @@ public class Camera {
      */
     public void setPitchMax(float pitchMax) {
         this.pitchMax = pitchMax;
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.PITCH_MAX);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.PITCH_MAX);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 
     /**
@@ -224,8 +224,8 @@ public class Camera {
      */
     public void setPitchMin(float pitchMin) {
         this.pitchMin = pitchMin;
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.PITCH_MIN);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.PITCH_MIN);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 
     /**
@@ -240,7 +240,7 @@ public class Camera {
      */
     public void setSensitivity(float sensitivity) {
         this.sensitivity = sensitivity;
-        DefaultEvents.eventCameraSettingChange.setValues(this, CameraSettings.SENSITIVITY);
-        EventSystem.callEvent(DefaultEvents.eventCameraSettingChange);
+        DefaultEvents.eventCameraSettingChanged.setValues(this, CameraSettings.SENSITIVITY);
+        EventSystem.callEvent(DefaultEvents.eventCameraSettingChanged);
     }
 }
