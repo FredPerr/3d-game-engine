@@ -7,7 +7,11 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.List;
 
-/**A texture is a loaded image to OpenGL.*/
+/**
+ * A texture is a loaded image to OpenGL.
+ * It possesses an ID given by OpenGL.
+ *
+ * Created by KitK4t on 2018-12-16.*/
 public class Texture {
 
     /**All the textures loaded in OpenGL.

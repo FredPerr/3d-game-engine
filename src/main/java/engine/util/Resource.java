@@ -4,10 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
+ * TODO Get the missing files from URLs and download them. An update system with the version of the file could be added.
+ *
  * The resource class provide a hierarchical way to load files
  * from the computer of the user to the web in case of need.
  *
- * TODO Get the missing files from URLs and download them. An update system with the version of the file could be added.
+ *  Created by KitK4t on 2018-12-15.
  */
 public class Resource {
 

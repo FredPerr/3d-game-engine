@@ -1,6 +1,10 @@
 package engine.util;
 
-/**The location class is a 3D position (x , y and z).*/
+/**
+ * The location class is a 3D position (x , y and z).
+ *
+ * Created by KitK4t on 2018-12-15.
+ * */
 public class Location {
 
     public float x,y,z;

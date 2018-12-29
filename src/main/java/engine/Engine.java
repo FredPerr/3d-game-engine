@@ -19,6 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The engine class is the main class of the engine. Everything starts from here.
+ * The {@link Renderer}s are the objects that render the stuff to the screen via
+ * their {@link engine.render.shader.ShaderProgram}. It possesses a {@link Camera}
+ * that get the graphics. It possesses a window to manage the display and a loop
+ * to refresh the engine.
+ *
  * Created by KitK4t on 2018-12-16.
  */
 public abstract class Engine implements IEngine {

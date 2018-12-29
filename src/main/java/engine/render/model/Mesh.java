@@ -15,6 +15,8 @@ import java.util.List;
  * Handles the loading of geometry data into VAOs. It also keeps track of all
  * the created VAOs and VBOs so that they can all be deleted when the game
  * closes. The meshes works with 3D locations with an index list attached to it.
+ *
+ * Created by KitK4t on 2018-12-16.
  */
 public class Mesh {
 

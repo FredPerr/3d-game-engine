@@ -7,9 +7,11 @@ import engine.util.Location;
 import engine.util.Rotation;
 
 /**
- * Created by KitK4t on 2018-12-27.
+ * A camera is an object with a field of view, a render distance in near and far,
+ * a sensitivity, a max and min pitch, the option to lock the pitch, a location
+ * and a rotation.
  *
- * A camera is an object with a field of view, a render distance in near and far.
+ * Created by KitK4t on 2018-12-27.
  */
 public class Camera {
 

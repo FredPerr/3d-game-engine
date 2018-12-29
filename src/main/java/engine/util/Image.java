@@ -6,9 +6,10 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 /**
+ * This is an STB loaded image. Store image assets byte
+ * buffer and other parameters of the image.
+ *
  * Created by KitK4t on 2018-12-15.
- * This is an STB loaded image.
- * Store image assets byte buffer and other parameters of the image.
  */
 public class Image {
 

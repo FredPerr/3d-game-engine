@@ -4,6 +4,22 @@ import engine.util.Resource;
 import engine.util.ResourceManager;
 import org.joml.Matrix4f;
 
+/**
+ * Default implementation of the shader program.
+ *
+ * This shader render a 3D world with.
+ * <ul>
+ *     <li>Texture</li>
+ *     <li>Color</li>
+ *     <li>Switch between texture and color mode.</li>
+ * </ul>
+ *
+ * The files path are <br>
+ *     Vertex shader file:<i>%Application jar folder%/assets/shaders/defaultshader.vs</i><br/>
+ *     Vertex shader file:<i>%Application jar folder%/assets/shaders/defaultshader.fs</i><br/>
+ * <br/>
+ * Created by KitK4t on 2018-12-16.
+ * */
 public class DefaultShader extends ShaderProgram {
 
     /**Create the default shader for the engine.

@@ -12,9 +12,14 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-/**A shader program is a OpenGL Shader Language way to pass begin with vertex and to end with
+/**
+ *
+ * A shader program is an OpenGL Shader Language way to pass begin with vertex and to end with
  * pixels by performing many actions to have lights, color and every other
- * 3D graphic effects.*/
+ * 3D graphic effects.
+ *
+ * Created by KitK4t on 2018-12-16.
+ * */
 public abstract class ShaderProgram {
 
     /**Float buffer used to load matrices into the shader.*/

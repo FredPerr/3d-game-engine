@@ -6,7 +6,12 @@ import org.joml.Matrix4f;
 
 import java.util.Random;
 
-/**The math util class provides functions to do math operations.*/
+/**
+ * The math util class provides functions to do
+ * math operations such as random values and matrices.
+ *
+ * Created by KitK4t on 2018-12-15.
+ */
 public class MathUtil {
 
     private static Random random = new Random();

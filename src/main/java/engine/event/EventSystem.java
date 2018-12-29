@@ -8,16 +8,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by KitK4t on 2018-12-16.
+ * The event system class manages the listeners and the call
+ * action for the events. All the members are static-access.
  *
- * The event system class manages the listeners and the calling method to call events.
+ * Created by KitK4t on 2018-12-16.
  */
 public class EventSystem {
 
     private static Map<EventListener, Map<Method, EventHandler>> listenerMethods = new HashMap<>();
 
     /**Add a listener in the list if it is not already inside.
-     * @param listener Listener to add to the list from the list.*/
+     * @param listener Listener to add in the list.*/
     public static void addListener(EventListener listener){
         if(!containsListener(listener)){
             Map<Method, EventHandler> methods = new HashMap<>();

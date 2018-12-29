@@ -1,6 +1,10 @@
 package engine.render.model;
 
-/**A model is a mesh with a texture bind to it.*/
+/**
+ * A textured mesh is a {@link Mesh} with a
+ * {@link Texture} bind to it.
+ *
+ * Created by KitK4t on 2018-12-16.*/
 public class TexturedMesh {
 
     private Mesh mesh;

@@ -11,6 +11,8 @@ import engine.render.Renderer;
 import org.lwjgl.opengl.GL11;
 
 /**
+ * This class listen the window size modifications.
+ *
  * Created by KitK4t on 2018-12-27.
  */
 public class ListenerWindowResized implements EventListener {
@@ -21,7 +23,7 @@ public class ListenerWindowResized implements EventListener {
         this.engine = engine;
     }
 
-    /**This method update the aspect ratio of the  projection matrix
+    /**This method update the aspect ratio and the  projection matrix
      * when the window is resized.*/
     @EventHandler(priority = EventPriority.HIGH)
     public void onWindowResized(EventWindowResize e){

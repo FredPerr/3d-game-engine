@@ -1,10 +1,10 @@
 package engine.event;
 
 /**
- * Created by KitK4t on 2018-12-16.
+ * The event listener interface is an indicator of a class with listener methods.
+ * You have to implement a class with this interface to make is "listen" events.
  *
- * The engine event listener interface is an indicator of a class with listener methods.
- * You have to implement this interface into listener event class.
+ * Created by KitK4t on 2018-12-16.
  */
 public interface EventListener {
 

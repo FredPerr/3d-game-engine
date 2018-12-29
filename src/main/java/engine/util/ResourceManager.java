@@ -1,18 +1,13 @@
 package engine.util;
 
-import org.lwjgl.system.MemoryStack;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URISyntaxException;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 
 /**
- * Created by KitK4t on 2018-12-16.
  * The Engine resource manager class provides many methods to load anything inside the engine.
  * Also helps to manager files.
+ *
+ * Created by KitK4t on 2018-12-16.
  */
 public class ResourceManager {
 

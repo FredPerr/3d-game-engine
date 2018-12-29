@@ -18,9 +18,11 @@ import java.nio.IntBuffer;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
+ * The Window class is a class that provides
+ * almost all of the GLFW functions to manage
+ * a window.
+ *
  * Created by KitK4t on 2018-12-15.
- * The Window class is a class that provides almost all of the GLFW functions to
- * manage a window.
  */
 public class Window {
 

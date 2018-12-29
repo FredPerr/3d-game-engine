@@ -4,14 +4,13 @@ import engine.window.Loop;
 import engine.window.Window;
 
 /**
- * Created by KitK4t on 2018-12-15.
- *
  * This is a LWJGL version 3.2 developed engine. This is a 3D engine with main features
  * of 3D to create games easily without having to manage a lot of LWJGL libraries.
  *
  * This interface implements a render, update, init,
  * (cleanUp: is redefine in the engine and not by the user) and end methods.
  *
+ * Created by KitK4t on 2018-12-15.
  */
 public interface IEngine {
 

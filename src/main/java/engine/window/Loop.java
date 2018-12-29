@@ -5,9 +5,10 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
 /**
- * Created by KitK4t on 2018-12-16.
+ * The loop class is a class that manage the refreshment
+ * (Frames per second and updates per second) of the engine.
  *
- * The loop class is a class that manage the refreshment (Frames per second and updates per second) of the engine.
+ * Created by KitK4t on 2018-12-16.
  */
 public class Loop {
 

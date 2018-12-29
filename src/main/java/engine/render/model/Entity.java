@@ -3,7 +3,14 @@ package engine.render.model;
 import engine.util.Location;
 import engine.util.Rotation;
 
-/**An entity is a dynamic object in the world.*/
+/**
+ * An entity is a dynamic object in the world. It contains a
+ * {@link engine.render.model.TexturedMesh}, a
+ * {@link engine.util.Location}, {@link engine.util.Rotation}
+ * and a scale.
+ *
+ * Created by KitK4t on 2018-12-16.
+ * */
 public class Entity {
 
     private TexturedMesh model;

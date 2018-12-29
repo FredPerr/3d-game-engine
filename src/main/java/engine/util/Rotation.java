@@ -1,5 +1,12 @@
 package engine.util;
 
+/**
+ * The rotation class is a 3D vector.
+ * It posses a pitch, a yaw and a roll
+ * which are the 3 possible angle movements.
+ *
+ * Created by KitK4t on 2018-12-16.
+ * */
 public class Rotation extends Location {
 
     /**@return Pitch angle in degrees. The pitch is the rotation in the direction of down to up.*/

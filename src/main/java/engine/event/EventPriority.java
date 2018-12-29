@@ -1,6 +1,10 @@
 package engine.event;
 
 /**
+ * The event priority enum class provides a ranking for the
+ * order of the execution of the events when they are called.
+ * It is the highest to the lowest order.
+ *
  * Created by KitK4t on 2018-12-16.
  */
 public enum EventPriority {
@@ -13,7 +17,8 @@ public enum EventPriority {
         this.priority = priority;
     }
 
-    /**@return The priority number of the priority.*/
+    /**@return The priority number of the priority.
+     * The higher it is, the more important the priority is.*/
     public int getPriority(){
         return this.priority;
     }
