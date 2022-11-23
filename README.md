@@ -1,3 +1,3 @@
-LWJGL Engine is a 3 dimensional engine based on LWJGL.
+3D game engine built on LWJGL (OpenGL) for Java game development.
 
-- An event system is implemented into the engine.
+
